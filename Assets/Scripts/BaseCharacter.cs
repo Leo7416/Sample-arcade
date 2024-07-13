@@ -1,3 +1,5 @@
+using SammpleArcade.PickUp;
+using SampleArcade.Boosts;
 using SampleArcade.Movement;
 using SampleArcade.Shooting;
 using UnityEngine;
@@ -6,7 +8,7 @@ namespace SampleArcade
 {
     [RequireComponent(typeof(CharacterMovementController), typeof(ShootingController))]
 
-    public class BaseCharacter : MonoBehaviour
+    public abstract class BaseCharacter : MonoBehaviour
     {
         [SerializeField]
         private Weapon _baseWeaponPrefab;
@@ -32,7 +34,7 @@ namespace SampleArcade
 
         protected void Start()
         {
-            _shootingController.SetWeapon(_baseWeaponPrefab, _hand);
+            SetWeapon(_baseWeaponPrefab);
         }
 
         protected void Update()
@@ -59,7 +61,32 @@ namespace SampleArcade
 
                 Destroy(other.gameObject);
             }
+            else if (LayerUtils.IsPickUpWeapon(other.gameObject))
+            {
+                var pickUpWeapon = other.gameObject.GetComponent<PickUpWeapon>();
+                pickUpWeapon.PickUp(this);
+
+                Destroy(other.gameObject);
+            }
+            else if (LayerUtils.IsPickUpBoost(other.gameObject))
+            {
+                var pickUpBoost = other.gameObject.GetComponent<PickUpBoost>();
+                pickUpBoost.PickUp(this);
+
+                Destroy(other.gameObject);
+            }
         }
+
+        public void SetWeapon(Weapon weapon)
+        {
+            _shootingController.SetWeapon(weapon, _hand);
+        }
+
+        public void ActivateBoost(Boost boost)
+        {
+            _characterMovementController.ApplyBoost(boost);
+        }
+
     }
 }
 

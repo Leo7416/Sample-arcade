@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SampleArcade.Boosts;
+using UnityEngine;
 
 namespace SampleArcade.Movement
 {
@@ -14,30 +15,36 @@ namespace SampleArcade.Movement
         [SerializeField]
         private float _sprint = 2f;
 
-        public Vector3 MovementDirection {  get; set; }
+        public Vector3 MovementDirection { get; set; }
         public Vector3 LookDirection { get; set; }
 
         private CharacterController _characterController;
+
+        private Boost _currentBoost;
 
         protected void Awake()
         {
             _characterController = GetComponent<CharacterController>();
         }
+
         protected void Update()
         {
             Translate();
 
             if (_maxRadiansDelta > 0f && LookDirection != Vector3.zero)
                 Rotate();
-
         }
 
         private void Translate()
         {
-            var delta = MovementDirection * _speed * Time.deltaTime;
+            var currentSpeed = _speed;
             if (Input.GetKey(KeyCode.Space))
-                delta = MovementDirection * _speed * _sprint * Time.deltaTime;
+                currentSpeed *= _sprint;
 
+            if (_currentBoost != null)
+                currentSpeed *= _currentBoost.SprintMultiplier;
+
+            var delta = MovementDirection * currentSpeed * Time.deltaTime;
             _characterController.Move(delta);
         }
 
@@ -55,6 +62,17 @@ namespace SampleArcade.Movement
 
                 transform.rotation = newRotation;
             }
+        }
+
+        public void ApplyBoost(Boost boost)
+        {
+            _currentBoost = boost;
+            Invoke(nameof(ClearBoost), boost.Duration); 
+        }
+
+        private void ClearBoost()
+        {
+            _currentBoost = null;
         }
     }
 }

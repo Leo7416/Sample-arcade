@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55e6484a7bfd6841a62c8370bf5fc3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseWeaponPrefab: {fileID: 277576493970054279, guid: 2ff1e4a50799adc4b8b0e847b7638332, type: 3}
+  _baseWeaponPrefab: {fileID: 4979272216292047424, guid: 57e1c97f83ebaa346bf7ad52ac3a63c1, type: 3}
   _hand: {fileID: 5974185047855045440}
   _health: 5
 --- !u!143 &1282079023409027235
