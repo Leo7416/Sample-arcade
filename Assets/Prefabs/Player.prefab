@@ -147,12 +147,11 @@ GameObject:
   - component: {fileID: 3602482834301881259}
   - component: {fileID: 3421606407023884767}
   - component: {fileID: 6221795825737586661}
+  - component: {fileID: 1282079023409027235}
   - component: {fileID: 4248194674632531212}
   - component: {fileID: 7094061587049774905}
-  - component: {fileID: 8126337129519889017}
-  - component: {fileID: 1282079023409027235}
   - component: {fileID: 8692213052861138600}
-  - component: {fileID: 5050738060915010918}
+  - component: {fileID: 8673278978711859641}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -227,6 +226,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!143 &1282079023409027235
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243252527104974042}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 15
+  m_StepOffset: 0.2
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4248194674632531212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,48 +278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _maxRadiansDelta: 10
-  _sprint: 2
---- !u!114 &8126337129519889017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3243252527104974042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e55e6484a7bfd6841a62c8370bf5fc3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseWeaponPrefab: {fileID: 4979272216292047424, guid: 57e1c97f83ebaa346bf7ad52ac3a63c1, type: 3}
-  _hand: {fileID: 5974185047855045440}
-  _health: 5
---- !u!143 &1282079023409027235
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3243252527104974042}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  _sprintPlayer: 2
+  _sprintEnemy: 0.5
 --- !u!114 &8692213052861138600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb071361004ab44ba7c935aba22df4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5050738060915010918
+--- !u!114 &8673278978711859641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -316,6 +301,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3243252527104974042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf702ade580df04f9e836d961619800, type: 3}
+  m_Script: {fileID: 11500000, guid: b64f6875084c9294a87895e8be66cbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _baseWeaponPrefab: {fileID: 4979272216292047424, guid: 57e1c97f83ebaa346bf7ad52ac3a63c1, type: 3}
+  _hand: {fileID: 5974185047855045440}
+  _health: 100
+  _lowHealthThreshold: 3

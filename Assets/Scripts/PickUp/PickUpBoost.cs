@@ -1,8 +1,7 @@
-﻿using SampleArcade;
-using SampleArcade.Boosts;
+﻿using SampleArcade.Boosts;
 using UnityEngine;
 
-namespace SammpleArcade.PickUp
+namespace SampleArcade.PickUp
 {
     public class PickUpBoost : PickUpItem
     {

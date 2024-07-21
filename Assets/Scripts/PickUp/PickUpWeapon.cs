@@ -1,8 +1,7 @@
-﻿using SampleArcade;
-using SampleArcade.Shooting;
+﻿using SampleArcade.Shooting;
 using UnityEngine;
 
-namespace SammpleArcade.PickUp
+namespace SampleArcade.PickUp
 {
     public class PickUpWeapon : PickUpItem
     {

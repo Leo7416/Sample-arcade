@@ -6,11 +6,14 @@ namespace SampleArcade.Movement
     {
         private UnityEngine.Camera _camera;
 
+        private CharacterMovementController _movementController;
+
         public Vector3 MovementDirection { get; private set; }
 
         protected void Awake()
         {
             _camera = UnityEngine.Camera.main;
+            _movementController = GetComponent<CharacterMovementController>();
         }
 
         protected void Update()
@@ -23,6 +26,8 @@ namespace SampleArcade.Movement
             direction.y = 0;
             
             MovementDirection = direction.normalized;
+
+            _movementController.IsSprintingPlayer = Input.GetKey(KeyCode.Space);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SampleArcade.Camera
 {
@@ -10,14 +9,7 @@ namespace SampleArcade.Camera
         [SerializeField]
         private Vector3 _rotationOffset = Vector3.zero;
 
-        [SerializeField]
-        private EnemyCharacter _player;
-
-        protected void Awake()
-        {
-            if (_player == null)
-                throw new NullReferenceException($"Follow camera can't follow null player - {nameof(_player)}");           
-        }
+        private PlayerCharacter _player;
 
         protected void LateUpdate()
         {
@@ -28,6 +20,11 @@ namespace SampleArcade.Camera
                 transform.position = _player.transform.position + _followCameraOffset;
                 transform.rotation = Quaternion.LookRotation(targetRotation, Vector3.up);
             }
+        }
+
+        public void SetPlayer(PlayerCharacter player)
+        {
+            _player = player;
         }
     }
 }

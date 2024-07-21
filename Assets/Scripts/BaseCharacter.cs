@@ -1,8 +1,10 @@
-using SammpleArcade.PickUp;
+using SampleArcade.PickUp;
 using SampleArcade.Boosts;
 using SampleArcade.Movement;
 using SampleArcade.Shooting;
 using UnityEngine;
+using SampleArcade.Enemy;
+using System.Linq;
 
 namespace SampleArcade
 {
@@ -17,13 +19,21 @@ namespace SampleArcade
         private Transform _hand;
 
         [SerializeField]
-        private float _health = 2f;
+        private float _health = 10f;
+
+        [SerializeField]
+        private float _lowHealthThreshold = 3f;
 
         private IMovementDirectionSource _movementDirectionSource;
-
         private CharacterMovementController _characterMovementController;
         private ShootingController _shootingController;
 
+        public float Health => _health;
+        public float LowHealthThreshold => _lowHealthThreshold;
+        public bool HasPickedUpWeapon => _hasPickedUpWeapon;
+
+        private bool _hasPickedUpWeapon = false;
+       
         protected void Awake()
         {
             _movementDirectionSource = GetComponent<IMovementDirectionSource>();
@@ -61,20 +71,17 @@ namespace SampleArcade
 
                 Destroy(other.gameObject);
             }
-            else if (LayerUtils.IsPickUpWeapon(other.gameObject))
+            else 
             {
-                var pickUpWeapon = other.gameObject.GetComponent<PickUpWeapon>();
-                pickUpWeapon.PickUp(this);
-
-                Destroy(other.gameObject);
+                var pickUpItem = other.gameObject.GetComponent<PickUpItem>();
+                if (pickUpItem != null)
+                {
+                    pickUpItem.PickUp(this);
+                    _hasPickedUpWeapon = true;
+                    Destroy(other.gameObject);
+                }
             }
-            else if (LayerUtils.IsPickUpBoost(other.gameObject))
-            {
-                var pickUpBoost = other.gameObject.GetComponent<PickUpBoost>();
-                pickUpBoost.PickUp(this);
-
-                Destroy(other.gameObject);
-            }
+            
         }
 
         public void SetWeapon(Weapon weapon)
@@ -86,7 +93,6 @@ namespace SampleArcade
         {
             _characterMovementController.ApplyBoost(boost);
         }
-
     }
 }
 

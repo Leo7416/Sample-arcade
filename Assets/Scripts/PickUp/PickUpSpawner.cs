@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace SammpleArcade.PickUp
+namespace SampleArcade.PickUp
 {
     public class PickUpSpawner : MonoBehaviour
     {
@@ -15,9 +15,6 @@ namespace SammpleArcade.PickUp
         private int _maxCount = 2;
 
         [SerializeField]
-        private float _spawnIntervalSeconds = 10f;
-
-        [SerializeField]
         private float _minSpawnIntervalSeconds = 5f;
 
         [SerializeField]
@@ -27,10 +24,13 @@ namespace SammpleArcade.PickUp
         private float _nextSpawnIntervalSeconds;
         private int _currentCount;
 
-        protected void Update()
+        protected void Awake()
         {
             _nextSpawnIntervalSeconds = Random.Range(_minSpawnIntervalSeconds, _maxSpawnIntervalSeconds);
+        }
 
+        protected void Update()
+        {
             if (_currentCount < _maxCount)
             {
                 _currentSpawnTimerSeconds += Time.deltaTime;
@@ -45,8 +45,6 @@ namespace SammpleArcade.PickUp
 
                     var pickUp = Instantiate(_pickUpPrefab, randomPosition, Quaternion.identity, transform);
                     pickUp.OnPickedUp += OnItemPickedUp;
-
-                    _nextSpawnIntervalSeconds = Random.Range(_minSpawnIntervalSeconds, _maxSpawnIntervalSeconds);
                 }
             }
         }

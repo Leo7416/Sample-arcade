@@ -13,10 +13,11 @@ namespace SampleArcade.Movement
         [SerializeField]
         private float _maxRadiansDelta = 10f;
         [SerializeField]
-        private float _sprint = 2f;
+        private float _sprintPlayer = 2f;
 
         public Vector3 MovementDirection { get; set; }
         public Vector3 LookDirection { get; set; }
+        public bool IsSprintingPlayer { get; set; }
 
         private CharacterController _characterController;
 
@@ -38,8 +39,9 @@ namespace SampleArcade.Movement
         private void Translate()
         {
             var currentSpeed = _speed;
-            if (Input.GetKey(KeyCode.Space))
-                currentSpeed *= _sprint;
+            if (IsSprintingPlayer &&
+                _currentBoost == null)
+                currentSpeed *= _sprintPlayer;
 
             if (_currentBoost != null)
                 currentSpeed *= _currentBoost.SprintMultiplier;

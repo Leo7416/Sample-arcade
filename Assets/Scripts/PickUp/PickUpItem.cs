@@ -1,8 +1,7 @@
-﻿using SampleArcade;
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace SammpleArcade.PickUp
+namespace SampleArcade.PickUp
 {
     public abstract class PickUpItem : MonoBehaviour
     {

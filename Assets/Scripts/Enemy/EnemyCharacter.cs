@@ -1,9 +1,8 @@
-using SampleArcade.Movement;
 using UnityEngine;
 
-namespace SampleArcade
+namespace SampleArcade.Enemy
 {
-    [RequireComponent(typeof(DummyDirectionController))]
+    [RequireComponent(typeof(EnemyDirectionController), typeof(EnemyAIController))]
 
     public class EnemyCharacter : BaseCharacter
     {

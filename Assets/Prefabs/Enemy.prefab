@@ -117,10 +117,11 @@ GameObject:
   - component: {fileID: 2302831063204253164}
   - component: {fileID: 296270230041397285}
   - component: {fileID: 7962909069201024650}
-  - component: {fileID: -1217973329777694025}
   - component: {fileID: 1434276694080025248}
   - component: {fileID: 7050162527644481432}
-  - component: {fileID: -7011804035028807849}
+  - component: {fileID: 976981577661569047}
+  - component: {fileID: 6566626524696731959}
+  - component: {fileID: 1217696705041455986}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -216,23 +217,11 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 15
+  m_StepOffset: 0.2
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1217973329777694025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2297795965682442854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf702ade580df04f9e836d961619800, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1434276694080025248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,9 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13682f0fc3e090642a0446f4d235039a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
+  _speed: 3
   _maxRadiansDelta: 10
-  _sprint: 2
+  _sprintPlayer: 2
 --- !u!114 &7050162527644481432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb071361004ab44ba7c935aba22df4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-7011804035028807849
+--- !u!114 &976981577661569047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,6 +264,35 @@ MonoBehaviour:
   _baseWeaponPrefab: {fileID: 4979272216292047424, guid: 57e1c97f83ebaa346bf7ad52ac3a63c1, type: 3}
   _hand: {fileID: 7124012283296784609}
   _health: 10
+  _lowHealthThreshold: 3
+--- !u!114 &6566626524696731959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2297795965682442854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28bedab1e26f41499b1ed87995899d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprintEnemy: 2
+--- !u!114 &1217696705041455986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2297795965682442854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756c1d9c3210ab648be6940fac379c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewRadius: 20
+  _escapeDistance: 8
+  _escapeProbability: 0.7
 --- !u!1 &6681958881948846138
 GameObject:
   m_ObjectHideFlags: 0
