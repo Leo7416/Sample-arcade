@@ -1,6 +1,5 @@
 ﻿using SampleArcade.FSM;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SampleArcade.Enemy.States
 {
@@ -8,15 +7,15 @@ namespace SampleArcade.Enemy.States
     {
         private const float NavMeshTurnOffDistance = 5f;
 
-        public EnemyStateMachine(EnemyDirectionController enemyDirectionController,
-            NavMesher navMesher, EnemyTarget target, Transform enemyTransform, BaseCharacter character, 
-            float escapeDistance, float escapeProbability, System.Random random)
+        public EnemyStateMachine(EnemyCharacter enemy, EnemyDirectionController enemyDirectionController,
+             EnemySprintingController enemySprintingController,
+             NavMesher navMesher, EnemyTarget target)
         {
-            var idleState = new IdleState();
+            var idleState = new IdleState(enemySprintingController);
             var findWayState = new FindWayState(target, navMesher, enemyDirectionController);
             var moveForwardState = new MoveForwardState(target, enemyDirectionController);
-            var escapeState = new EscapeState(target, enemyDirectionController, enemyTransform,
-                escapeDistance, escapeProbability, random);
+            var escapeState = new EscapeState(target, enemyDirectionController,
+                enemySprintingController);
 
             SetInitialState(idleState);
 
@@ -30,7 +29,8 @@ namespace SampleArcade.Enemy.States
                     () => target.DistanceClosestFromAgent() <= NavMeshTurnOffDistance),
                 new Transition(
                     escapeState,
-                    () => character.Health <= character.LowHealthThreshold)
+                    () => enemy.GetHealthPercent() <= enemy.EscapeHealthPercent &&
+                          enemy.DecidesToRun() && target.IsTargetCharacter())
             });
 
             AddState(state: findWayState, transitions: new List<Transition>
@@ -53,14 +53,15 @@ namespace SampleArcade.Enemy.States
                     () => target.DistanceClosestFromAgent() > NavMeshTurnOffDistance),
                 new Transition(
                     escapeState,
-                    () => character.Health <= character.LowHealthThreshold)
+                    () => enemy.GetHealthPercent() <= enemy.EscapeHealthPercent &&
+                          enemy.DecidesToRun() && target.IsTargetCharacter())
             });
 
             AddState(state: escapeState, transitions: new List<Transition>
             {
                 new Transition(
                     idleState,
-                    () => target.Closest == null)
+                    () => !target.IsTargetCharacter())
             });
         }
     }

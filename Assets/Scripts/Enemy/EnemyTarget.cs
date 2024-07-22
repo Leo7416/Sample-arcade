@@ -8,61 +8,65 @@ namespace SampleArcade.Enemy
         public GameObject ClosestCharacter { get; private set; }
 
         private readonly float _viewRadius;
-        private readonly Transform _agentTransform;
-        private readonly PlayerCharacter _player;
-        private readonly BaseCharacter _baseCharacter;
+        private readonly EnemyCharacter _agent;
+
+        public PlayerCharacter Player { get; set; }
 
         private readonly Collider[] _colliders = new Collider[10];
 
-        public EnemyTarget(Transform agentTransform, PlayerCharacter player, float viewRadius, BaseCharacter baseCharacter)
+        public EnemyTarget(EnemyCharacter agent, PlayerCharacter player, float viewRadius)
         {
-            _agentTransform = agentTransform;
+            _agent = agent;
             _viewRadius = viewRadius;
-            _player = player;
-            _baseCharacter = baseCharacter;
+            Player = player;
         }
 
         public void FindClosest()
         {
-            var closestWeapon = FindClosestObject(LayerUtils.PickUpMask);
+            var minDistance = float.MaxValue;
+            GameObject closestPickUp = null;
+            float minPickUpDistance = float.MaxValue;
 
-            if (closestWeapon != null && !_baseCharacter.HasPickedUpWeapon)
-            {
-                Closest = closestWeapon;
-                ClosestCharacter = null;
-            }
-            else
-            {
-                ClosestCharacter = FindClosestObject(LayerUtils.CharacterMask);
-                Closest = ClosestCharacter;
+            var count = FindAllTargets(LayerUtils.PickUpMask | LayerUtils.CharacterMask);
 
-                if (_player != null && DistanceFromAgentTo(_player.gameObject) < DistanceClosestFromCharacter())
-                {
-                    Closest = _player.gameObject;
-                }
-            }
-        }
-
-        private GameObject FindClosestObject(int layerMask)
-        {
-            float minDistance = float.MaxValue;
-            GameObject closestObject = null;
-
-            int count = FindAllTargets(layerMask);
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var go = _colliders[i].gameObject;
-                if (go == _agentTransform.gameObject) continue;
 
-                float distance = DistanceFromAgentTo(go);
-                if (distance < minDistance)
+                if (go == _agent.gameObject) continue;
+
+                var distance = DistanceFromAgentTo(go);
+
+                if (LayerUtils.IsWeaponPickUp(go))
                 {
-                    minDistance = distance;
-                    closestObject = go;
+                    if (!_agent.HasBaseWeapon() && distance < minPickUpDistance)
+                    {
+                        minPickUpDistance = distance;
+                        closestPickUp = go;
+                    }
+                    else if (_agent.HasBaseWeapon() && distance < minDistance)
+                    {
+                        minPickUpDistance = distance;
+                        closestPickUp = go;
+                    }
+                }
+                else
+                {
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        Closest = go;
+                    }
                 }
             }
 
-            return closestObject;
+            if (_agent.HasBaseWeapon() && closestPickUp != null)
+            {
+                Closest = closestPickUp;
+            }
+
+            if (Player != null && DistanceFromAgentTo(Player.gameObject) < minDistance)
+                Closest = Player.gameObject;
         }
 
         public float DistanceClosestFromAgent()
@@ -71,27 +75,23 @@ namespace SampleArcade.Enemy
             {
                 return DistanceFromAgentTo(Closest);
             }
-            return float.MaxValue;
+            return 0;
         }
 
-        public float DistanceClosestFromCharacter()
+        public bool IsTargetCharacter()
         {
-            if (ClosestCharacter != null)
-            {
-                return DistanceFromAgentTo(ClosestCharacter);
-            }
-            return float.MaxValue;
+            return LayerUtils.IsCharacter(Closest);
         }
 
         private int FindAllTargets(int layerMask)
         {
             return Physics.OverlapSphereNonAlloc(
-                _agentTransform.position,
+                _agent.transform.position,
                 _viewRadius,
                 _colliders,
                 layerMask);
         }
 
-        private float DistanceFromAgentTo(GameObject go) => (_agentTransform.position - go.transform.position).magnitude;
+        private float DistanceFromAgentTo(GameObject go) => (_agent.transform.position - go.transform.position).magnitude;
     }
 }

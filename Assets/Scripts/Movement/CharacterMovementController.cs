@@ -13,19 +13,22 @@ namespace SampleArcade.Movement
         [SerializeField]
         private float _maxRadiansDelta = 10f;
         [SerializeField]
-        private float _sprintPlayer = 2f;
+        private float _sprint = 2f;
+
+        private float _boostSpeed;
+        private float _currentSpeed;
 
         public Vector3 MovementDirection { get; set; }
         public Vector3 LookDirection { get; set; }
-        public bool IsSprintingPlayer { get; set; }
 
         private CharacterController _characterController;
-
-        private Boost _currentBoost;
+        private SpeedBoost _currentBoost;
 
         protected void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+
+            _boostSpeed = _speed;
         }
 
         protected void Update()
@@ -38,15 +41,7 @@ namespace SampleArcade.Movement
 
         private void Translate()
         {
-            var currentSpeed = _speed;
-            if (IsSprintingPlayer &&
-                _currentBoost == null)
-                currentSpeed *= _sprintPlayer;
-
-            if (_currentBoost != null)
-                currentSpeed *= _currentBoost.SprintMultiplier;
-
-            var delta = MovementDirection * currentSpeed * Time.deltaTime;
+            var delta = MovementDirection * _currentSpeed * Time.deltaTime;
             _characterController.Move(delta);
         }
 
@@ -55,26 +50,31 @@ namespace SampleArcade.Movement
             var currentLookDirection = transform.rotation * Vector3.forward;
             float sqrMagnitude = (currentLookDirection - LookDirection).sqrMagnitude;
 
-            if (sqrMagnitude > SqrEpsilon)
-            {
-                var newRotation = Quaternion.Slerp(
-                    transform.rotation,
-                    Quaternion.LookRotation(LookDirection, Vector3.up),
-                    _maxRadiansDelta * Time.deltaTime);
+            if (sqrMagnitude <= SqrEpsilon) return;
+            var newRotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(LookDirection, Vector3.up),
+                _maxRadiansDelta * Time.deltaTime);
 
-                transform.rotation = newRotation;
-            }
+            transform.rotation = newRotation;
         }
 
-        public void ApplyBoost(Boost boost)
+        public void MultiplySpeed(float boost)
         {
-            _currentBoost = boost;
-            Invoke(nameof(ClearBoost), boost.Duration); 
+            _boostSpeed *= boost;
         }
 
-        private void ClearBoost()
+        public void SetSprint(bool isSprinting)
         {
-            _currentBoost = null;
+            if (isSprinting)
+                _currentSpeed = _boostSpeed * _sprint;
+            else
+                _currentSpeed = _boostSpeed;
+        }
+
+        public void ResetSpeed()
+        {
+            _boostSpeed = _speed;
         }
     }
 }

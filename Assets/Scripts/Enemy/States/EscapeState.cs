@@ -7,33 +7,29 @@ namespace SampleArcade.Enemy.States
     {
         private readonly EnemyTarget _target;
         private readonly EnemyDirectionController _enemyDirectionController;
-        private readonly Transform _enemyTransform;
-        private readonly float _escapeDistance;
-        private readonly float _escapeProbability;
-        private readonly System.Random _random;
+        private readonly EnemySprintingController _enemySprintingController;
 
         private Vector3 _currentPoint;
 
-        public EscapeState(EnemyTarget target, EnemyDirectionController enemyDirectionController, Transform enemyTransform, float escapeDistance, float escapeProbability, System.Random random)
+        public EscapeState(EnemyTarget target, EnemyDirectionController enemyDirectionController,
+            EnemySprintingController enemySprintingController)
         {
             _target = target;
             _enemyDirectionController = enemyDirectionController;
-            _enemyTransform = enemyTransform;
-            _escapeDistance = escapeDistance;
-            _escapeProbability = escapeProbability;
-            _random = random;
+            _enemySprintingController = enemySprintingController;
         }
 
         public override void Execute()
         {
-            Vector3 targetPosition = _target.Closest.transform.position;
-            Vector3 directionAwayFromTarget = (_enemyTransform.position - targetPosition).normalized;
-            Vector3 runAwayPosition = targetPosition + directionAwayFromTarget * _escapeDistance;
+            var targetPosition = _target.Closest.transform.position;
+            targetPosition.x = -targetPosition.x;
+            targetPosition.z = -targetPosition.z;
 
-            if (_currentPoint != targetPosition && _random.NextDouble() < _escapeProbability)
+            if (_currentPoint != targetPosition)
             {
                 _currentPoint = targetPosition;
-                _enemyDirectionController.UpdateMovementDirection(runAwayPosition);
+                _enemyDirectionController.UpdateMovementDirection(targetPosition);
+                _enemySprintingController.IsSprinting = true;
             }
         }
     }

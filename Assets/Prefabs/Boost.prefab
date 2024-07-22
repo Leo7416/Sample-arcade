@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1022863873140736982}
   - component: {fileID: 7610724807943608414}
   - component: {fileID: 3819382703977657808}
-  - component: {fileID: 2116186101351130882}
   - component: {fileID: -6466638346600033795}
+  - component: {fileID: 5431436582272017084}
   m_Layer: 9
   m_Name: Boost
   m_TagString: Untagged
@@ -85,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2116186101351130882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7678327253462733834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39a91c3cee3e02478bab3f5f231b54b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <SprintMultiplier>k__BackingField: 3
-  <Duration>k__BackingField: 5
 --- !u!135 &-6466638346600033795
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -120,3 +106,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5431436582272017084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7678327253462733834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8549bbf925cde174d911b03b541c7abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprintMultiplier: 2
+  _durationSeconds: 5
