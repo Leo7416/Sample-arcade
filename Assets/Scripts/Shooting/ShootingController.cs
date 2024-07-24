@@ -12,9 +12,12 @@ namespace SampleArcade.Shooting
         private Collider[] _colliders = new Collider[2];
         private float _nextShotTimeSec;
         private GameObject _target;
+        private bool _isAlive = true;
 
         protected void Update()
         {
+            if (!_isAlive) return;
+
             _target = GetTarget();
 
             _nextShotTimeSec -= Time.deltaTime;
@@ -25,6 +28,11 @@ namespace SampleArcade.Shooting
 
                 _nextShotTimeSec = _weapon.ShootFrequencySec;
             }
+        }
+
+        public void SetAlive(bool isAlive)
+        {
+            _isAlive = isAlive;
         }
 
         public void SetWeapon(Weapon weaponPrefab, Transform hand)

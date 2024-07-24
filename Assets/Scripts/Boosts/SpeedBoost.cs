@@ -28,8 +28,10 @@ namespace SampleArcade.Boosts
         protected override void DeactivateBoost()
         {
             if (Character)
+            {
                 Character.ResetSpeed();
-
+                Character = null;
+            }
             base.DeactivateBoost();
             HasBoost = false;
         }

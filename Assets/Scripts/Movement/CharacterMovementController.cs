@@ -15,6 +15,7 @@ namespace SampleArcade.Movement
         [SerializeField]
         private float _sprint = 2f;
 
+        private bool _isAlive = true;
         private float _boostSpeed;
         private float _currentSpeed;
 
@@ -32,10 +33,13 @@ namespace SampleArcade.Movement
 
         protected void Update()
         {
-            Translate();
+            if (_isAlive)
+            {
+                Translate();
 
-            if (_maxRadiansDelta > 0f && LookDirection != Vector3.zero)
-                Rotate();
+                if (_maxRadiansDelta > 0f && LookDirection != Vector3.zero)
+                    Rotate();
+            }
         }
 
         private void Translate()
@@ -74,6 +78,10 @@ namespace SampleArcade.Movement
         public void ResetSpeed()
         {
             _boostSpeed = _speed;
+        }
+        public void SetAlive(bool isAlive)
+        {
+            _isAlive = isAlive;
         }
     }
 }

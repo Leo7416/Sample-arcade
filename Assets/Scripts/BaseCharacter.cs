@@ -27,11 +27,11 @@ namespace SampleArcade
         private CharacterMovementController _characterMovementController;
         private ShootingController _shootingController;
         private SpeedBoost _currentBoost;
-
-        private float _currentHealth;
         private Weapon _currentWeapon;
 
-       
+        private float _currentHealth;
+        private float _deadAnimationTimeSeconds = 4.5f;
+
         protected void Awake()
         {
             _movementDirectionSource = GetComponent<IMovementDirectionSource>();
@@ -52,6 +52,17 @@ namespace SampleArcade
 
         protected void Update()
         {
+            if (_currentHealth <= 0)
+            {
+                _characterMovementController.MovementDirection = Vector3.zero;
+                _characterMovementController.LookDirection = Vector3.zero;
+                _characterMovementController.SetAlive(false);
+                _shootingController.SetAlive(false);
+
+                _animator.SetTrigger("IsDying");
+                Destroy(gameObject, _deadAnimationTimeSeconds);
+            }
+
             var direction = _movementDirectionSource.MovementDirection;
             var lookDirection = direction;
             if (_shootingController.HasTarget)
@@ -67,9 +78,9 @@ namespace SampleArcade
             _animator.SetBool("IsWalking", direction != Vector3.zero);
             _animator.SetBool("IsShooting", _shootingController.HasTarget);
             _animator.SetBool("IsRunning", isRunning);
-
-            if (_currentHealth <= 0)
-                Destroy(gameObject);
+            _animator.SetBool("IsBackwards",
+                Mathf.Abs(Mathf.Sign(direction.x) - Mathf.Sign(lookDirection.x)) > Mathf.Epsilon ||
+                Mathf.Abs(Mathf.Sign(direction.z) - Mathf.Sign(lookDirection.z)) > Mathf.Epsilon);
         }
 
         protected void OnTriggerEnter(Collider other)
