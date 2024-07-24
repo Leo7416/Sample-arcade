@@ -15,7 +15,7 @@ namespace SampleArcade.Enemy.States
             var findWayState = new FindWayState(target, navMesher, enemyDirectionController);
             var moveForwardState = new MoveForwardState(target, enemyDirectionController);
             var escapeState = new EscapeState(target, enemyDirectionController,
-                enemySprintingController);
+                enemySprintingController, enemy);
 
             SetInitialState(idleState);
 

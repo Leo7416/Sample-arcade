@@ -22,7 +22,6 @@ namespace SampleArcade.Movement
         public Vector3 LookDirection { get; set; }
 
         private CharacterController _characterController;
-        private SpeedBoost _currentBoost;
 
         protected void Awake()
         {

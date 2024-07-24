@@ -8,28 +8,39 @@ namespace SampleArcade.Enemy.States
         private readonly EnemyTarget _target;
         private readonly EnemyDirectionController _enemyDirectionController;
         private readonly EnemySprintingController _enemySprintingController;
+        private readonly EnemyCharacter _enemyCharacter;
 
         private Vector3 _currentPoint;
 
         public EscapeState(EnemyTarget target, EnemyDirectionController enemyDirectionController,
-            EnemySprintingController enemySprintingController)
+            EnemySprintingController enemySprintingController, EnemyCharacter enemyCharacter)
         {
             _target = target;
             _enemyDirectionController = enemyDirectionController;
             _enemySprintingController = enemySprintingController;
+            _enemyCharacter = enemyCharacter;
         }
 
         public override void Execute()
         {
             var targetPosition = _target.Closest.transform.position;
-            targetPosition.x = -targetPosition.x;
-            targetPosition.z = -targetPosition.z;
+            var enemyPosition = _enemyDirectionController.transform.position;
 
-            if (_currentPoint != targetPosition)
+            var directionToTarget = (targetPosition - enemyPosition).normalized;
+            var escapeDirection = -directionToTarget;
+
+            _currentPoint = enemyPosition + escapeDirection * _enemyCharacter.EscapeDistance;
+
+            float distanceToTarget = Vector3.Distance(enemyPosition, targetPosition);
+
+            if (distanceToTarget < _enemyCharacter.EscapeDistance)
             {
-                _currentPoint = targetPosition;
-                _enemyDirectionController.UpdateMovementDirection(targetPosition);
+                _enemyDirectionController.UpdateMovementDirection(_currentPoint);
                 _enemySprintingController.IsSprinting = true;
+            }
+            else
+            {
+                _enemySprintingController.IsSprinting = false;
             }
         }
     }

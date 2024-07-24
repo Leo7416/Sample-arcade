@@ -11,6 +11,9 @@ namespace SampleArcade
     public abstract class BaseCharacter : MonoBehaviour
     {
         [SerializeField]
+        private Animator _animator;
+
+        [SerializeField]
         private Weapon _baseWeaponPrefab;
 
         [SerializeField]
@@ -23,6 +26,7 @@ namespace SampleArcade
         private ISprintingSource _sprintingSource;
         private CharacterMovementController _characterMovementController;
         private ShootingController _shootingController;
+        private SpeedBoost _currentBoost;
 
         private float _currentHealth;
         private Weapon _currentWeapon;
@@ -35,6 +39,7 @@ namespace SampleArcade
 
             _characterMovementController = GetComponent<CharacterMovementController>();
             _shootingController = GetComponent<ShootingController>();
+            _currentBoost = GetComponent<SpeedBoost>();
 
             _currentWeapon = _baseWeaponPrefab;
             _currentHealth = _health;
@@ -56,6 +61,12 @@ namespace SampleArcade
             _characterMovementController.LookDirection = lookDirection;
 
             _characterMovementController.SetSprint(_sprintingSource.IsSprinting);
+
+            bool isRunning = _sprintingSource.IsSprinting || (_currentBoost != null && _currentBoost.HasBoost);
+
+            _animator.SetBool("IsWalking", direction != Vector3.zero);
+            _animator.SetBool("IsShooting", _shootingController.HasTarget);
+            _animator.SetBool("IsRunning", isRunning);
 
             if (_currentHealth <= 0)
                 Destroy(gameObject);
@@ -79,8 +90,7 @@ namespace SampleArcade
                     pickUpItem.PickUp(this);
                     Destroy(other.gameObject);
                 }
-            }
-            
+            }      
         }
 
         public void SetWeapon(Weapon weapon)
@@ -92,6 +102,7 @@ namespace SampleArcade
         public void ActivateBoost(SpeedBoost boost)
         {
             boost.ActivateBoost(this);
+            _currentBoost = boost;
         }
 
         public void MultiplySpeed(float boost)
