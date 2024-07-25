@@ -3,6 +3,7 @@ using SampleArcade.Boosts;
 using SampleArcade.Movement;
 using SampleArcade.Shooting;
 using UnityEngine;
+using System;
 
 namespace SampleArcade
 {
@@ -10,6 +11,8 @@ namespace SampleArcade
 
     public abstract class BaseCharacter : MonoBehaviour
     {
+        public event Action<BaseCharacter> Dead;
+
         [SerializeField]
         private Animator _animator;
 
@@ -60,6 +63,7 @@ namespace SampleArcade
                 _shootingController.SetAlive(false);
 
                 _animator.SetTrigger("IsDying");
+                Dead?.Invoke(this);
                 Destroy(gameObject, _deadAnimationTimeSeconds);
             }
 
@@ -105,7 +109,7 @@ namespace SampleArcade
         }
 
         public void SetWeapon(Weapon weapon)
-        {
+        {   
             _shootingController.SetWeapon(weapon, _hand);
             _currentWeapon = weapon;
         }

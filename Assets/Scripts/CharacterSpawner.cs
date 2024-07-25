@@ -1,6 +1,9 @@
 ﻿using SampleArcade.Camera;
+using SampleArcade.Enemy;
+using SampleArcade.GameManagers;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SampleArcade
 {
@@ -34,9 +37,17 @@ namespace SampleArcade
 
         private static bool _isPlayerSpawnedInAnyZone = false;
 
+        private GameManager _gameManager;
+
         protected void Awake()
         {
             _nextSpawnIntervalSeconds = Random.Range(_minSpawnIntervalSeconds, _maxSpawnIntervalSeconds);
+            _gameManager = FindObjectOfType<GameManager>();
+
+            if (SceneManager.GetActiveScene().buildIndex != 0)
+            {
+                _isPlayerSpawnedInAnyZone = false;
+            }
         }
 
         protected void Update()
@@ -59,6 +70,8 @@ namespace SampleArcade
                         {
                             cameraController.SetPlayer(player);
                         }
+
+                        _gameManager.RegisterPlayer(player);
                     }
                 }
                 else if (_currentEnemyCount < _maxEnemyCount)
@@ -77,6 +90,11 @@ namespace SampleArcade
 
             var character = Instantiate(characterPrefab, randomPosition, Quaternion.identity, transform);
             currentCount++;
+
+            if (character is EnemyCharacter enemy)
+            {
+                _gameManager.RegisterEnemy(enemy);
+            }
 
             return character;
         }
