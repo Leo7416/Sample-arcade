@@ -1,4 +1,3 @@
-using SampleArcade.Movement;
 using UnityEngine;
 
 namespace SampleArcade.Enemy
@@ -14,7 +13,7 @@ namespace SampleArcade.Enemy
         [field: SerializeField]
         public float EscapeDistance { get; private set; } = 10f;
 
-        public bool DecidesToRun() => Random.Range(0, 100) <= EscapePercent;
+        public bool DecidesToRun() => UnityEngine.Random.Range(0, 100) <= EscapePercent;
     }
 }
 

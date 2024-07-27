@@ -6,14 +6,29 @@ namespace SampleArcade.Enemy
 {
     public class EnemyPointer : MonoBehaviour
     {
-        public event Action<EnemyPointer> OnDestroyed;
+        private BaseCharacter _сharacter;
 
         private void Start()
         {
+            _сharacter = GetComponent<BaseCharacter>();
+
+            if (_сharacter != null)
+            {
+                _сharacter.Dead += OnEnemyDead;
+            }
+
             PointerManager.Instance.AddToList(this);
         }
 
-        private void OnDestroy()
+        private void OnEnemyDead(BaseCharacter character)
+        {
+            if (_сharacter != null)
+            {
+                _сharacter.Dead -= OnEnemyDead;
+            }
+        }
+
+        private void Destroy()
         {
             PointerManager.Instance.RemoveFromList(this);
         }

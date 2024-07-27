@@ -15,8 +15,10 @@ namespace SampleArcade.GameManagers
         public PlayerCharacter Player { get; private set; }
         public List<EnemyCharacter> Enemies { get; private set; } = new List<EnemyCharacter>();
         public TimerUI Timer { get; private set; }
+        public EnemyCounterUI EnemyCounterUI { get; private set; }
 
         private bool _playerRegistered = false;
+        private int _enemyCount;
 
         protected void Start()
         {
@@ -38,6 +40,9 @@ namespace SampleArcade.GameManagers
                 Timer.TimeEnd += PlayerLose;
             }
 
+            EnemyCounterUI = FindObjectOfType<EnemyCounterUI>();
+            UpdateEnemyCounterUI();
+
             Time.timeScale = 1f;
         }
 
@@ -56,6 +61,8 @@ namespace SampleArcade.GameManagers
 
             Enemies.Add(enemy);
             enemy.Dead += OnEnemyDead;
+            _enemyCount++;
+            UpdateEnemyCounterUI();
         }
 
         private void OnPlayerDead(BaseCharacter sender)
@@ -75,6 +82,8 @@ namespace SampleArcade.GameManagers
 
             Enemies.Remove(enemy);
             enemy.Dead -= OnEnemyDead;
+            _enemyCount--;
+            UpdateEnemyCounterUI();
 
             if (Enemies.Count == 0)
             {
@@ -91,6 +100,14 @@ namespace SampleArcade.GameManagers
             }
             Loss?.Invoke();
             Time.timeScale = 0f;
+        }
+
+        private void UpdateEnemyCounterUI()
+        {
+            if (EnemyCounterUI != null)
+            {
+                EnemyCounterUI.UpdateEnemyCounter(_enemyCount);
+            }
         }
     }
 }
