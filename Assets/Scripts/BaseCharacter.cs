@@ -4,6 +4,7 @@ using SampleArcade.Movement;
 using SampleArcade.Shooting;
 using UnityEngine;
 using System;
+using SampleArcade.UI;
 
 namespace SampleArcade
 {
@@ -31,6 +32,7 @@ namespace SampleArcade
         private ShootingController _shootingController;
         private SpeedBoost _currentBoost;
         private Weapon _currentWeapon;
+        private HeathBarUI _heathBarUI;
 
         private float _currentHealth;
         private float _deadAnimationTimeSeconds = 4.5f;
@@ -43,6 +45,7 @@ namespace SampleArcade
             _characterMovementController = GetComponent<CharacterMovementController>();
             _shootingController = GetComponent<ShootingController>();
             _currentBoost = GetComponent<SpeedBoost>();
+            _heathBarUI = GetComponentInChildren<HeathBarUI>();
 
             _currentWeapon = _baseWeaponPrefab;
             _currentHealth = _health;
@@ -74,7 +77,7 @@ namespace SampleArcade
 
             _characterMovementController.MovementDirection = direction;
             _characterMovementController.LookDirection = lookDirection;
-
+            
             _characterMovementController.SetSprint(_sprintingSource.IsSprinting);
 
             bool isRunning = _sprintingSource.IsSprinting || (_currentBoost != null && _currentBoost.HasBoost);
@@ -94,6 +97,7 @@ namespace SampleArcade
                 var bullet = other.gameObject.GetComponent<Bullet>();
 
                 _currentHealth -= bullet.Damage;
+                _heathBarUI.SetHealth(_currentHealth);
 
                 Destroy(other.gameObject);
             }
