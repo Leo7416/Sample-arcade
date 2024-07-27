@@ -12,7 +12,7 @@ namespace SampleArcade.GameManagers
         Transform _playerTransform;
         [SerializeField]
         UnityEngine.Camera _camera;
-
+    
         private Dictionary<EnemyPointer, PointerIcon> _dictionary = new Dictionary<EnemyPointer, PointerIcon>();
 
         public static PointerManager Instance;
@@ -32,22 +32,12 @@ namespace SampleArcade.GameManagers
         {
             PointerIcon newPointer = Instantiate(_pointerPrefab, transform);
             _dictionary.Add(enemyPointer, newPointer);
-            enemyPointer.OnDestroyed += HandleEnemyDestroyed;
         }
 
         public void RemoveFromList(EnemyPointer enemyPointer)
         {
-            if (_dictionary.TryGetValue(enemyPointer, out PointerIcon pointerIcon))
-            {
-                Destroy(pointerIcon.gameObject);
-                _dictionary.Remove(enemyPointer);
-                enemyPointer.OnDestroyed -= HandleEnemyDestroyed;
-            }
-        }
-
-        private void HandleEnemyDestroyed(EnemyPointer enemyPointer)
-        {
-            RemoveFromList(enemyPointer);
+            Destroy(_dictionary[enemyPointer].gameObject);
+            _dictionary.Remove(enemyPointer);
         }
 
         void LateUpdate()
@@ -92,7 +82,7 @@ namespace SampleArcade.GameManagers
                     pointerIcon.Hide();
                 }
 
-                pointerIcon.SetIconPosition(position, rotation, toEnemy.magnitude);
+                pointerIcon.SetIconPosition(position, rotation);
             }
         }
 

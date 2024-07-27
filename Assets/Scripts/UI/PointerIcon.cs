@@ -1,14 +1,12 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PointerIcon : MonoBehaviour
 {
-    [SerializeField] Image _image;
-    [SerializeField] float _minSize = 10f;
-    [SerializeField] float _maxSize = 60f; 
-    [SerializeField] float _maxDistance = 70f; 
 
+    [SerializeField] Image _image;
     bool _isShown = true;
 
     private void Awake()
@@ -17,11 +15,10 @@ public class PointerIcon : MonoBehaviour
         _isShown = false;
     }
 
-    public void SetIconPosition(Vector3 position, Quaternion rotation, float distanceToEnemy)
+    public void SetIconPosition(Vector3 position, Quaternion rotation)
     {
         transform.position = position;
         transform.rotation = rotation;
-        UpdateIconSize(distanceToEnemy);
     }
 
     public void Show()
@@ -41,6 +38,11 @@ public class PointerIcon : MonoBehaviour
         StartCoroutine(HideProcess());
     }
 
+    public void SetIconScale(float scale)
+    {
+        transform.localScale = Vector3.one * scale;
+    }
+
     IEnumerator ShowProcess()
     {
         _image.enabled = true;
@@ -55,6 +57,7 @@ public class PointerIcon : MonoBehaviour
 
     IEnumerator HideProcess()
     {
+
         for (float t = 0; t < 1f; t += Time.deltaTime * 4f)
         {
             transform.localScale = Vector3.one * (1f - t);
@@ -63,10 +66,4 @@ public class PointerIcon : MonoBehaviour
         _image.enabled = false;
     }
 
-    private void UpdateIconSize(float distance)
-    {
-        float size = Mathf.Lerp(_maxSize, _minSize, distance / _maxDistance);
-        size = Mathf.Clamp(size, _minSize, _maxSize);
-        transform.localScale = Vector3.one * size;
-    }
 }
