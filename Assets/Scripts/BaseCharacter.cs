@@ -38,6 +38,9 @@ namespace SampleArcade
         [SerializeField]
         private AudioSource _deadSound;
 
+        [SerializeField]
+        private ParticleSystem _speedBoostParticle;
+
         private IMovementDirectionSource _movementDirectionSource;
         private ISprintingSource _sprintingSource;
         private CharacterMovementController _characterMovementController;
@@ -84,6 +87,7 @@ namespace SampleArcade
                 _animator.SetTrigger("IsDying");
                 Dead?.Invoke(this);
 
+                _speedBoostParticle.Stop();
                 _hitParticle.Stop();
                 _hitSound.Stop();
                 _deadParticle.Play();
@@ -149,6 +153,12 @@ namespace SampleArcade
         {
             boost.ActivateBoost(this);
             _currentBoost = boost;
+            _speedBoostParticle.Play();
+        }
+
+        public void StopSpeedBoostEffects()
+        {
+            _speedBoostParticle.Stop();
         }
 
         public void MultiplySpeed(float boost)

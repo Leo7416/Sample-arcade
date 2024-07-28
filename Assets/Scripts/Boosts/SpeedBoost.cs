@@ -30,6 +30,7 @@ namespace SampleArcade.Boosts
             if (Character)
             {
                 Character.ResetSpeed();
+                Character.StopSpeedBoostEffects();
                 Character = null;
             }
             base.DeactivateBoost();
