@@ -8,6 +8,9 @@ namespace SampleArcade.UI
         [SerializeField]
         private GameManager _gameManager;
 
+        [SerializeField]
+        private AudioSource _loseSound;
+
         protected void Start()
         {
             _gameManager.Loss += ShowPanel;
@@ -17,6 +20,7 @@ namespace SampleArcade.UI
         private void ShowPanel()
         {
             gameObject.SetActive(true);
+            _loseSound.Play();
         }
     }
 }

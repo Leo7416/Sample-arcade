@@ -7,6 +7,9 @@ namespace SampleArcade.UI
     {
         [SerializeField]
         private GameManager _gameManager;
+
+        [SerializeField]
+        private AudioSource _winSound;
         
         protected void Start()
         {
@@ -17,6 +20,7 @@ namespace SampleArcade.UI
         private void ShowPanel()
         {
             gameObject.SetActive(true);
+            _winSound.Play();
         }
     }
 }

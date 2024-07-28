@@ -26,6 +26,18 @@ namespace SampleArcade
         [SerializeField]
         private float _health = 10f;
 
+        [SerializeField]
+        private ParticleSystem _hitParticle;
+
+        [SerializeField]
+        private ParticleSystem _deadParticle;
+
+        [SerializeField]
+        private AudioSource _hitSound;
+
+        [SerializeField]
+        private AudioSource _deadSound;
+
         private IMovementDirectionSource _movementDirectionSource;
         private ISprintingSource _sprintingSource;
         private CharacterMovementController _characterMovementController;
@@ -36,6 +48,7 @@ namespace SampleArcade
 
         private float _currentHealth;
         private float _deadAnimationTimeSeconds = 4.5f;
+        private bool _isDead;
 
         protected void Awake()
         {
@@ -49,6 +62,7 @@ namespace SampleArcade
 
             _currentWeapon = _baseWeaponPrefab;
             _currentHealth = _health;
+            _isDead = false;
         }
 
         protected void Start()
@@ -58,8 +72,10 @@ namespace SampleArcade
 
         protected void Update()
         {
-            if (_currentHealth <= 0)
+            if (_currentHealth <= 0 && _isDead == false)
             {
+                _isDead = true;
+
                 _characterMovementController.MovementDirection = Vector3.zero;
                 _characterMovementController.LookDirection = Vector3.zero;
                 _characterMovementController.SetAlive(false);
@@ -67,8 +83,16 @@ namespace SampleArcade
 
                 _animator.SetTrigger("IsDying");
                 Dead?.Invoke(this);
+
+                _hitParticle.Stop();
+                _hitSound.Stop();
+                _deadParticle.Play();
+                _deadSound.Play();
+
                 Destroy(gameObject, _deadAnimationTimeSeconds);
             }
+
+            if (_isDead) return;
 
             var direction = _movementDirectionSource.MovementDirection;
             var lookDirection = direction;
@@ -98,6 +122,9 @@ namespace SampleArcade
 
                 _currentHealth -= bullet.Damage;
                 _heathBarUI.SetHealth(_currentHealth);
+
+                _hitParticle.Play();
+                _hitSound.Play();
 
                 Destroy(other.gameObject);
             }
