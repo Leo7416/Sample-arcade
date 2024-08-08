@@ -10,7 +10,7 @@ namespace SampleArcade.Shooting
         public Transform BulletSpawnPosition {  get; private set; }
 
         [SerializeField]
-        private Bullet _bulletPrefab;
+        private BulletView _bulletPrefab;
 
         [SerializeField]
         private ParticleSystem _shootParticle;
@@ -42,8 +42,8 @@ namespace SampleArcade.Shooting
         public void Shoot(Vector3 targetDirection, WeaponDescription description)
         {
             var bullet = Instantiate(_bulletPrefab, BulletSpawnPosition.position, Quaternion.identity);
-            bullet.Initialize(targetDirection, 
-                description.BulletMaxFlyDistance, description.BulletFlySpeed, description.Damage);
+            bullet.Initialize(description.Damage, targetDirection, 
+                description.BulletMaxFlyDistance, description.BulletFlySpeed);
 
             _shootParticle.Play();
             _shootSound.Play();

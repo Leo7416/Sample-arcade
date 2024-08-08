@@ -27,7 +27,6 @@ namespace SampleArcade.Movement
 
         public Vector3 Translate(Vector3 movementDirection)
         {
-            Debug.Log($"Current Speed: {_currentSpeed}");
             return movementDirection * _currentSpeed * _timer.DeltaTime;
         }
 
@@ -68,7 +67,6 @@ namespace SampleArcade.Movement
         public float MultiplySpeedBoost(float boostSpeed)
         {
             _currentSpeed = _speed * boostSpeed;
-            Debug.Log($"Current boost Speed: {_currentSpeed}");
             return _currentSpeed;
         }
     }

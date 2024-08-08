@@ -115,7 +115,7 @@ namespace SampleArcade
         {
             if (LayerUtils.IsBullet(other.gameObject))
             {
-                var bullet = other.gameObject.GetComponent<Bullet>();
+                var bullet = other.gameObject.GetComponent<BulletView>();
 
                 Model.Damage(bullet.Damage);
                 _heathBarUI.SetHealth(Model.CurrentHealth);

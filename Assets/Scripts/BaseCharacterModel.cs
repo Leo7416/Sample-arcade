@@ -44,7 +44,6 @@ namespace SampleArcade
             Transform.Position += _characterMovementController.Translate(direction);
             Transform.Rotation = _characterMovementController.Rotate(Transform.Rotation, lookDirection);
             _characterMovementController.SetSprint(IsRunnig);
-            
         }
 
         public void Damage(float damage)

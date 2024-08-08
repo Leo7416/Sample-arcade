@@ -6,7 +6,7 @@ namespace SampleArcade.PickUp
     public class PickUpBoost : PickUpItem
     {
         [SerializeField]
-        private SpeedBoost _boostPrefab;
+        private Boost _boostPrefab;
 
         public override void PickUp(BaseCharacterView character)
         {

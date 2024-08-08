@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SampleArcade.Enemy
 {
-    [RequireComponent(typeof(EnemyDirectionController), typeof(EnemyAIController), typeof(EnemySprintingController))]
+    [RequireComponent(typeof(EnemyDirectionController), typeof(EnemyAIControllerView), typeof(EnemySprintingController))]
 
     public class EnemyCharacterView : BaseCharacterView
     {
