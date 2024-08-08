@@ -5,7 +5,7 @@ namespace SampleArcade
 {
     [RequireComponent(typeof(PlayerMovementDirectionController), typeof(PlayerSprintingController))]
 
-    public class PlayerCharacter : BaseCharacter
+    public class PlayerCharacterView : BaseCharacterView
     {
 
     }

@@ -17,7 +17,6 @@ namespace SampleArcade.UI
 
         private void LateUpdate()
         {
-            // Always face the camera
             transform.LookAt(transform.position + _cameraTransform.rotation * Vector3.forward, _cameraTransform.rotation * Vector3.up);
         }
         public void SetHealth(float healthPercent)

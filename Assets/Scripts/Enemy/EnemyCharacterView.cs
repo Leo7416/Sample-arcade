@@ -4,7 +4,7 @@ namespace SampleArcade.Enemy
 {
     [RequireComponent(typeof(EnemyDirectionController), typeof(EnemyAIController), typeof(EnemySprintingController))]
 
-    public class EnemyCharacter : BaseCharacter
+    public class EnemyCharacterView : BaseCharacterView
     {
         [field: SerializeField]
         public float EscapeHealthPercent { get; private set; } = 30f;

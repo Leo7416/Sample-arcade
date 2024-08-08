@@ -1096,13 +1096,21 @@ PrefabInstance:
       propertyPath: _minSpawnIntervalSeconds
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 310114487517975049, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: _enemyCharacterCompositionRoot
+      value: 
+      objectReference: {fileID: 6795105314093779027, guid: b98b6293eec3e4b498169e1a441e5417, type: 3}
+    - target: {fileID: 310114487517975049, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: _playerCharacterCompositionRoot
+      value: 
+      objectReference: {fileID: 4986910992426734277, guid: 0517a0f5e675f5a45a984ea89da788d5, type: 3}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1143,6 +1151,10 @@ PrefabInstance:
     - target: {fileID: 3064209724738133222, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_Name
       value: CharacterSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064209724738133222, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2123,13 +2135,21 @@ PrefabInstance:
       propertyPath: _minSpawnIntervalSeconds
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 310114487517975049, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: _enemyCharacterCompositionRoot
+      value: 
+      objectReference: {fileID: 6795105314093779027, guid: b98b6293eec3e4b498169e1a441e5417, type: 3}
+    - target: {fileID: 310114487517975049, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: _playerCharacterCompositionRoot
+      value: 
+      objectReference: {fileID: 4986910992426734277, guid: 0517a0f5e675f5a45a984ea89da788d5, type: 3}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.5
       objectReference: {fileID: 0}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2166,6 +2186,10 @@ PrefabInstance:
     - target: {fileID: 3064209724738133222, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_Name
       value: CharacterSpawner_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064209724738133222, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3216,13 +3240,21 @@ PrefabInstance:
       propertyPath: _minSpawnIntervalSeconds
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 310114487517975049, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: _enemyCharacterCompositionRoot
+      value: 
+      objectReference: {fileID: 6795105314093779027, guid: b98b6293eec3e4b498169e1a441e5417, type: 3}
+    - target: {fileID: 310114487517975049, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: _playerCharacterCompositionRoot
+      value: 
+      objectReference: {fileID: 4986910992426734277, guid: 0517a0f5e675f5a45a984ea89da788d5, type: 3}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.25
       objectReference: {fileID: 0}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2976225034438070274, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3259,6 +3291,10 @@ PrefabInstance:
     - target: {fileID: 3064209724738133222, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
       propertyPath: m_Name
       value: CharacterSpawner_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064209724738133222, guid: e5dea1f5b93088a47a71359a9af1df7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3612,6 +3648,10 @@ PrefabInstance:
     - target: {fileID: 3064209724738133222, guid: f7b9750cc360169458524eb190cfa130, type: 3}
       propertyPath: m_Name
       value: BoostSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064209724738133222, guid: f7b9750cc360169458524eb190cfa130, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8450051956620220505, guid: f7b9750cc360169458524eb190cfa130, type: 3}
       propertyPath: _spawnIntervalSeconds

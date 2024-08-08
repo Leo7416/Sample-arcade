@@ -5,14 +5,12 @@ namespace SampleArcade.Enemy
 {
     public class EnemyDirectionController : MonoBehaviour, IMovementDirectionSource
     {
-        private CharacterMovementController _movementController;
-        private BaseCharacter _baseCharacter;
+        private BaseCharacterView _baseCharacter;
         public Vector3 MovementDirection { get; private set; }
 
         private void Awake()
         {
-            _movementController = GetComponent<CharacterMovementController>();
-            _baseCharacter = GetComponent<BaseCharacter>();
+            _baseCharacter = GetComponent<BaseCharacterView>();
         }
 
         public void UpdateMovementDirection(Vector3 targetPosition)

@@ -8,12 +8,12 @@ namespace SampleArcade.Enemy.States
         private readonly EnemyTarget _target;
         private readonly EnemyDirectionController _enemyDirectionController;
         private readonly EnemySprintingController _enemySprintingController;
-        private readonly EnemyCharacter _enemyCharacter;
+        private readonly EnemyCharacterView _enemyCharacter;
 
         private Vector3 _currentPoint;
 
         public EscapeState(EnemyTarget target, EnemyDirectionController enemyDirectionController,
-            EnemySprintingController enemySprintingController, EnemyCharacter enemyCharacter)
+            EnemySprintingController enemySprintingController, EnemyCharacterView enemyCharacter)
         {
             _target = target;
             _enemyDirectionController = enemyDirectionController;

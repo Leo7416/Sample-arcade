@@ -1,87 +1,75 @@
-﻿using SampleArcade.Boosts;
+﻿using SampleArcade.Timer;
 using UnityEngine;
 
 namespace SampleArcade.Movement
 {
-    [RequireComponent(typeof(CharacterController))]
-    public class CharacterMovementController : MonoBehaviour
+    public class CharacterMovementController : IMovementController
     {
         private static readonly float SqrEpsilon = Mathf.Epsilon * Mathf.Epsilon;
 
-        [SerializeField]
-        private float _speed = 1f;
-        [SerializeField]
-        private float _maxRadiansDelta = 10f;
-        [SerializeField]
-        private float _sprint = 2f;
+        private readonly ITimer _timer;
 
-        private bool _isAlive = true;
-        private float _boostSpeed;
+        private readonly float _speed;
+        private readonly float _maxRadiansDelta;
+        private readonly float _sprint;
+
         private float _currentSpeed;
 
-        public Vector3 MovementDirection { get; set; }
-        public Vector3 LookDirection { get; set; }
-
-        private CharacterController _characterController;
-
-        protected void Awake()
+        public CharacterMovementController(ICharacterConfig config, ITimer timer)
         {
-            _characterController = GetComponent<CharacterController>();
+            _speed = config.Speed;
+            _maxRadiansDelta = config.MaxRadiansDelta;
+            _sprint = config.Sprint;
 
-            _boostSpeed = _speed;
+            _timer = timer;
+            _currentSpeed = _speed;
         }
 
-        protected void Update()
+        public Vector3 Translate(Vector3 movementDirection)
         {
-            if (_isAlive)
-            {
-                Translate();
+            Debug.Log($"Current Speed: {_currentSpeed}");
+            return movementDirection * _currentSpeed * _timer.DeltaTime;
+        }
 
-                if (_maxRadiansDelta > 0f && LookDirection != Vector3.zero)
-                    Rotate();
+        public Quaternion Rotate(Quaternion currentRotation, Vector3 lookDirection)
+        {
+            if (_maxRadiansDelta > 0f && lookDirection != Vector3.zero)
+            {
+                var currentLookDirection = currentRotation * Vector3.forward;
+                float sqrMagnitude = (currentLookDirection - lookDirection).sqrMagnitude;
+
+                if (sqrMagnitude > SqrEpsilon)
+                {
+                    var newRotation = Quaternion.Slerp(
+                        currentRotation,
+                        Quaternion.LookRotation(lookDirection, Vector3.up),
+                        _maxRadiansDelta * _timer.DeltaTime);
+
+                    return newRotation;
+                }
+            }
+            return currentRotation;
+        }
+
+        public float SetSprint(bool isSprinting)
+        {
+            if (isSprinting)
+            {
+                _currentSpeed = _speed * _sprint;
+                return _currentSpeed;
+            }
+            else
+            {
+                _currentSpeed = _speed;
+                return _currentSpeed;
             }
         }
 
-        private void Translate()
+        public float MultiplySpeedBoost(float boostSpeed)
         {
-            var delta = MovementDirection * _currentSpeed * Time.deltaTime;
-            _characterController.Move(delta);
-        }
-
-        private void Rotate()
-        {
-            var currentLookDirection = transform.rotation * Vector3.forward;
-            float sqrMagnitude = (currentLookDirection - LookDirection).sqrMagnitude;
-
-            if (sqrMagnitude <= SqrEpsilon) return;
-            var newRotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(LookDirection, Vector3.up),
-                _maxRadiansDelta * Time.deltaTime);
-
-            transform.rotation = newRotation;
-        }
-
-        public void MultiplySpeed(float boost)
-        {
-            _boostSpeed *= boost;
-        }
-
-        public void SetSprint(bool isSprinting)
-        {
-            if (isSprinting)
-                _currentSpeed = _boostSpeed * _sprint;
-            else
-                _currentSpeed = _boostSpeed;
-        }
-
-        public void ResetSpeed()
-        {
-            _boostSpeed = _speed;
-        }
-        public void SetAlive(bool isAlive)
-        {
-            _isAlive = isAlive;
+            _currentSpeed = _speed * boostSpeed;
+            Debug.Log($"Current boost Speed: {_currentSpeed}");
+            return _currentSpeed;
         }
     }
 }

@@ -12,9 +12,9 @@ namespace SampleArcade.Enemy
 
         protected void Awake()
         {
-            var player = FindObjectOfType<PlayerCharacter>();
+            var player = FindObjectOfType<PlayerCharacterView>();
 
-            var enemy = FindObjectOfType<EnemyCharacter>();
+            var enemy = FindObjectOfType<EnemyCharacterView>();
 
             var enemyDirectionController = GetComponent<EnemyDirectionController>();
 
@@ -31,7 +31,7 @@ namespace SampleArcade.Enemy
         protected void Update()
         {
             if (!_target.Player)
-                _target.Player = FindObjectOfType<PlayerCharacter>();
+                _target.Player = FindObjectOfType<PlayerCharacterView>();
             _target.FindClosest();
             _stateMachine.Update();
         }

@@ -6,11 +6,11 @@ namespace SampleArcade.Enemy
 {
     public class EnemyPointer : MonoBehaviour
     {
-        private BaseCharacter _сharacter;
+        private BaseCharacterView _сharacter;
 
         private void Start()
         {
-            _сharacter = GetComponent<BaseCharacter>();
+            _сharacter = GetComponent<BaseCharacterView>();
 
             if (_сharacter != null)
             {
@@ -20,7 +20,7 @@ namespace SampleArcade.Enemy
             PointerManager.Instance.AddToList(this);
         }
 
-        private void OnEnemyDead(BaseCharacter character)
+        private void OnEnemyDead(BaseCharacterView character)
         {
             if (_сharacter != null)
             {

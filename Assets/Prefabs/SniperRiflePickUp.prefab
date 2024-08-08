@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f5aa5d813a75948ba587900381af59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponPrefab: {fileID: 4979272216292047424, guid: 67e3e374ea90dd7408d21de1b7a8c2f2, type: 3}
+  _weaponFactory: {fileID: 11400000, guid: a8e2a69f43f37b24ba265b4a26fc9c2f, type: 2}
 --- !u!65 &820792345208283071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94,7 +94,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2857751246835664221}
-  - component: {fileID: 4046900877228835188}
   m_Layer: 0
   m_Name: SniperRifle
   m_TagString: Untagged
@@ -118,25 +117,6 @@ Transform:
   - {fileID: 6210446963725541489}
   m_Father: {fileID: 2181015231892321879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4046900877228835188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322053666201512820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1497a1b77a12f11409e2b82a73a6ae0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <BulletPrefab>k__BackingField: {fileID: -1537525431215784944, guid: 61f21aebecb5e5c48a1923452c5c363e, type: 3}
-  <ShootRadius>k__BackingField: 10
-  <ShootFrequencySec>k__BackingField: 5
-  _damage: 5
-  _bulletMaxFlyDistance: 20
-  _bulletFlySpeed: 10
-  _bulletSpawnPosition: {fileID: 0}
 --- !u!1 &5103967255507913941
 GameObject:
   m_ObjectHideFlags: 0

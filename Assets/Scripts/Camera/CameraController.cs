@@ -9,7 +9,7 @@ namespace SampleArcade.Camera
         [SerializeField]
         private Vector3 _rotationOffset = Vector3.zero;
 
-        private PlayerCharacter _player;
+        private PlayerCharacterView _player;
 
         protected void LateUpdate()
         {
@@ -22,7 +22,7 @@ namespace SampleArcade.Camera
             }
         }
 
-        public void SetPlayer(PlayerCharacter player)
+        public void SetPlayer(PlayerCharacterView player)
         {
             _player = player;
         }

@@ -8,13 +8,13 @@ namespace SampleArcade.Enemy
         public GameObject ClosestCharacter { get; private set; }
 
         private readonly float _viewRadius;
-        private readonly EnemyCharacter _agent;
+        private readonly EnemyCharacterView _agent;
 
-        public PlayerCharacter Player { get; set; }
+        public PlayerCharacterView Player { get; set; }
 
         private readonly Collider[] _colliders = new Collider[10];
 
-        public EnemyTarget(EnemyCharacter agent, PlayerCharacter player, float viewRadius)
+        public EnemyTarget(EnemyCharacterView agent, PlayerCharacterView player, float viewRadius)
         {
             _agent = agent;
             _viewRadius = viewRadius;

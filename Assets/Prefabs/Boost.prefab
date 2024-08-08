@@ -230,7 +230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4905242709584239252}
-  - component: {fileID: -4781230437493886750}
+  - component: {fileID: 1285274944514796285}
   m_Layer: 0
   m_Name: Boost
   m_TagString: Untagged
@@ -254,7 +254,7 @@ Transform:
   - {fileID: 2651732550444564761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4781230437493886750
+--- !u!114 &1285274944514796285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

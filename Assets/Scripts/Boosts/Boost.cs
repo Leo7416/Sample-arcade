@@ -1,20 +1,13 @@
-﻿using SampleArcade;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SampleArcade.Boosts
 {
     public abstract class Boost : MonoBehaviour
     {
-        protected BaseCharacter Character;
+        protected BaseCharacterView _characterView;
 
-        public virtual void ActivateBoost(BaseCharacter character)
-        {
-            Character = character;
-        }
+        public abstract void ActivateBoost(BaseCharacterView character);
 
-        protected virtual void DeactivateBoost()
-        {
-            Character = null;
-        }
+        protected abstract void DeactivateBoost();
     }
 }

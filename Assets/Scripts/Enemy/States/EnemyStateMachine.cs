@@ -7,7 +7,7 @@ namespace SampleArcade.Enemy.States
     {
         private const float NavMeshTurnOffDistance = 5f;
 
-        public EnemyStateMachine(EnemyCharacter enemy, EnemyDirectionController enemyDirectionController,
+        public EnemyStateMachine(EnemyCharacterView enemy, EnemyDirectionController enemyDirectionController,
              EnemySprintingController enemySprintingController,
              NavMesher navMesher, EnemyTarget target)
         {

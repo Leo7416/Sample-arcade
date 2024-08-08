@@ -1,19 +1,21 @@
 ﻿using SampleArcade.Camera;
 using SampleArcade.Enemy;
 using SampleArcade.GameManagers;
+using SampleArcade.CompositionRoot;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SampleArcade.Timer;
 
 namespace SampleArcade
 {
     public class CharacterSpawner : MonoBehaviour
     {
         [SerializeField]
-        private BaseCharacter _playerCharacterPrefab;
+        private CharacterCompositionRoot _playerCharacterCompositionRoot;
 
         [SerializeField]
-        private BaseCharacter _enemyCharacterPrefab;
+        private CharacterCompositionRoot _enemyCharacterCompositionRoot;
 
         [SerializeField]
         private float _range = 10f;
@@ -38,11 +40,13 @@ namespace SampleArcade
         private static bool _isPlayerSpawnedInAnyZone = false;
 
         private GameManager _gameManager;
+        private ITimer _timer;
 
         protected void Awake()
         {
             _nextSpawnIntervalSeconds = Random.Range(_minSpawnIntervalSeconds, _maxSpawnIntervalSeconds);
             _gameManager = FindObjectOfType<GameManager>();
+            _timer = new UnityTimer();
 
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
@@ -52,7 +56,7 @@ namespace SampleArcade
 
         protected void Update()
         {
-            _currentSpawnTimerSeconds += Time.deltaTime;
+            _currentSpawnTimerSeconds += _timer.DeltaTime;
 
             if (_currentSpawnTimerSeconds >= _nextSpawnIntervalSeconds)
             {
@@ -60,7 +64,7 @@ namespace SampleArcade
 
                 if (_currentPlayerCount < _maxPlayerCount && !_isPlayerSpawnedInAnyZone)
                 {
-                    var player = SpawnCharacter(_playerCharacterPrefab, ref _currentPlayerCount) as PlayerCharacter;
+                    var player = SpawnCharacter(_playerCharacterCompositionRoot, ref _currentPlayerCount) as PlayerCharacterView;
                     if (player != null)
                     {
                         _isPlayerSpawnedInAnyZone = true;
@@ -76,27 +80,29 @@ namespace SampleArcade
                 }
                 else if (_currentEnemyCount < _maxEnemyCount)
                 {
-                    SpawnCharacter(_enemyCharacterPrefab, ref _currentEnemyCount);
+                    SpawnCharacter(_enemyCharacterCompositionRoot, ref _currentEnemyCount);
                 }
 
                 _nextSpawnIntervalSeconds = Random.Range(_minSpawnIntervalSeconds, _maxSpawnIntervalSeconds);
             }
         }
 
-        private BaseCharacter SpawnCharacter(BaseCharacter characterPrefab, ref int currentCount)
+        private BaseCharacterView SpawnCharacter(CharacterCompositionRoot characterCompositionRoot, ref int currentCount)
         {
             var randomPointInsideRange = Random.insideUnitCircle * _range;
             var randomPosition = new Vector3(randomPointInsideRange.x, 0f, randomPointInsideRange.y) + transform.position;
 
-            var character = Instantiate(characterPrefab, randomPosition, Quaternion.identity, transform);
+            var compositionRootInstance = Instantiate(characterCompositionRoot, randomPosition, Quaternion.identity, transform);
+            var composedCharacter = compositionRootInstance.Compose(_timer);
+
             currentCount++;
 
-            if (character is EnemyCharacter enemy)
+            if (composedCharacter is EnemyCharacterView enemy)
             {
                 _gameManager.RegisterEnemy(enemy);
             }
 
-            return character;
+            return composedCharacter;
         }
 
         protected void OnDrawGizmos()

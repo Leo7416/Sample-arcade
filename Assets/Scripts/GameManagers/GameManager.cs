@@ -2,7 +2,6 @@
 using SampleArcade.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace SampleArcade.GameManagers
@@ -12,8 +11,8 @@ namespace SampleArcade.GameManagers
         public event Action Win;
         public event Action Loss;
 
-        public PlayerCharacter Player { get; private set; }
-        public List<EnemyCharacter> Enemies { get; private set; } = new List<EnemyCharacter>();
+        public PlayerCharacterView Player { get; private set; }
+        public List<EnemyCharacterView> Enemies { get; private set; } = new List<EnemyCharacterView>();
         public TimerUI Timer { get; private set; }
         public EnemyCounterUI EnemyCounterUI { get; private set; }
 
@@ -22,13 +21,13 @@ namespace SampleArcade.GameManagers
 
         protected void Start()
         {
-            Player = FindObjectOfType<PlayerCharacter>();
+            Player = FindObjectOfType<PlayerCharacterView>();
             if (Player != null)
             {
                 RegisterPlayer(Player);
             }
 
-            var foundEnemies = FindObjectsOfType<EnemyCharacter>();
+            var foundEnemies = FindObjectsOfType<EnemyCharacterView>();
             foreach (var enemy in foundEnemies)
             {
                 RegisterEnemy(enemy);
@@ -46,7 +45,7 @@ namespace SampleArcade.GameManagers
             Time.timeScale = 1f;
         }
 
-        public void RegisterPlayer(PlayerCharacter player)
+        public void RegisterPlayer(PlayerCharacterView player)
         {
             if (player == null) return;
 
@@ -55,7 +54,7 @@ namespace SampleArcade.GameManagers
             _playerRegistered = true;
         }
 
-        public void RegisterEnemy(EnemyCharacter enemy)
+        public void RegisterEnemy(EnemyCharacterView enemy)
         {
             if (enemy == null) return;
 
@@ -65,7 +64,7 @@ namespace SampleArcade.GameManagers
             UpdateEnemyCounterUI();
         }
 
-        private void OnPlayerDead(BaseCharacter sender)
+        private void OnPlayerDead(BaseCharacterView sender)
         {
             if (_playerRegistered)
             {
@@ -75,9 +74,9 @@ namespace SampleArcade.GameManagers
             }
         }
 
-        private void OnEnemyDead(BaseCharacter sender)
+        private void OnEnemyDead(BaseCharacterView sender)
         {
-            var enemy = sender as EnemyCharacter;
+            var enemy = sender as EnemyCharacterView;
             if (enemy == null) return;
 
             Enemies.Remove(enemy);

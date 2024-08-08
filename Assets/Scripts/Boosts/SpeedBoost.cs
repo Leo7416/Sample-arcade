@@ -4,37 +4,23 @@ namespace SampleArcade.Boosts
 {
     public class SpeedBoost : Boost
     {
-        public bool HasBoost = false;
-
         [SerializeField]
         private float _sprintMultiplier = 2f;
         [SerializeField]
         private float _durationSeconds = 5f;
 
-        public override void ActivateBoost(BaseCharacter character)
+        public override void ActivateBoost(BaseCharacterView characterView)
         {
-            if (Character)
-            {
-                CancelInvoke(nameof(DeactivateBoost));
-                DeactivateBoost();
-            }
-
-            base.ActivateBoost(character);
-            character.MultiplySpeed(_sprintMultiplier);
-            HasBoost = true;
+            characterView.ActivateSpeedBoostEffect(_sprintMultiplier, _durationSeconds);
             Invoke(nameof(DeactivateBoost), _durationSeconds);
         }
 
         protected override void DeactivateBoost()
         {
-            if (Character)
+            if (_characterView != null)
             {
-                Character.ResetSpeed();
-                Character.StopSpeedBoostEffects();
-                Character = null;
+                _characterView.DeactivateSpeedBoostEffect();
             }
-            base.DeactivateBoost();
-            HasBoost = false;
         }
     }
 }

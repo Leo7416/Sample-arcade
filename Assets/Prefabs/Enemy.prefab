@@ -427,8 +427,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1686574567446317053}
   - component: {fileID: 7962909069201024650}
-  - component: {fileID: 1434276694080025248}
-  - component: {fileID: 7050162527644481432}
   - component: {fileID: 976981577661569047}
   - component: {fileID: 6566626524696731959}
   - component: {fileID: 1217696705041455986}
@@ -436,6 +434,7 @@ GameObject:
   - component: {fileID: 5246492339968286217}
   - component: {fileID: 7809458098981083593}
   - component: {fileID: 6782529652624691088}
+  - component: {fileID: 6795105314093779027}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -452,7 +451,7 @@ Transform:
   m_GameObject: {fileID: 2297795965682442854}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 1, z: -5}
+  m_LocalPosition: {x: 22.919075, y: 1, z: 17.999043}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -487,33 +486,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.4, z: 0}
---- !u!114 &1434276694080025248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2297795965682442854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13682f0fc3e090642a0446f4d235039a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
-  _maxRadiansDelta: 10
-  _sprint: 1.5
---- !u!114 &7050162527644481432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2297795965682442854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfb071361004ab44ba7c935aba22df4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &976981577661569047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,10 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55e6484a7bfd6841a62c8370bf5fc3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 5246492339968286217}
-  _baseWeaponPrefab: {fileID: 4979272216292047424, guid: 57e1c97f83ebaa346bf7ad52ac3a63c1, type: 3}
+  _baseWeapon: {fileID: 11400000, guid: 892db2307a126d24782f5e24f2cd938f, type: 2}
   _hand: {fileID: 3466127079807156573}
-  _health: 10
   _hitParticle: {fileID: 7410378428905569508}
   _deadParticle: {fileID: 2575190852394407603}
   _hitSound: {fileID: 7809458098981083593}
@@ -788,6 +758,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6795105314093779027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2297795965682442854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48ea74ae87511e47ade27fa8c2abda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterConfig: {fileID: 11400000, guid: 68fed58d2ade71146b11fc6e5c41c383, type: 2}
+  _view: {fileID: 976981577661569047}
 --- !u!1 &2373578113144886229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,7 +1226,6 @@ GameObject:
   - component: {fileID: 2161082968832042004}
   - component: {fileID: 8104545625206592093}
   - component: {fileID: 55002476811058622}
-  - component: {fileID: 3304759372353651391}
   - component: {fileID: 5932088677274222529}
   - component: {fileID: 4212291744775266637}
   - component: {fileID: 8873057196908770256}
@@ -1337,19 +1320,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3304759372353651391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384482321292453093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 405b064ac59a4f44c95c0b0047221416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthSlider: {fileID: 4212291744775266637}
 --- !u!222 &5932088677274222529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1397,7 +1367,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4183008180795665913}
   m_HandleRect: {fileID: 0}
