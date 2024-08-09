@@ -11,36 +11,25 @@ namespace SampleArcade.GameManagers
         public event Action Win;
         public event Action Loss;
 
+        [field: SerializeField]
+        public TimerUIView TimerView { get; private set; }
+
+        [field: SerializeField]
+        public EnemyCounterUIView EnemyCounterView { get; private set; }
+
         public PlayerCharacterView Player { get; private set; }
         public List<EnemyCharacterView> Enemies { get; private set; } = new List<EnemyCharacterView>();
-        public TimerUI Timer { get; private set; }
-        public EnemyCounterUI EnemyCounterUI { get; private set; }
 
         private bool _playerRegistered = false;
-        private int _enemyCount;
 
         protected void Start()
         {
-            Player = FindObjectOfType<PlayerCharacterView>();
-            if (Player != null)
-            {
-                RegisterPlayer(Player);
-            }
+            TimerView.TimeEnd += PlayerLose;
 
-            var foundEnemies = FindObjectsOfType<EnemyCharacterView>();
-            foreach (var enemy in foundEnemies)
+            if (EnemyCounterView != null)
             {
-                RegisterEnemy(enemy);
+                EnemyCounterView.SetEnemyCount(Enemies.Count);
             }
-
-            Timer = FindObjectOfType<TimerUI>();
-            if (Timer != null)
-            {
-                Timer.TimeEnd += PlayerLose;
-            }
-
-            EnemyCounterUI = FindObjectOfType<EnemyCounterUI>();
-            UpdateEnemyCounterUI();
 
             Time.timeScale = 1f;
         }
@@ -60,8 +49,8 @@ namespace SampleArcade.GameManagers
 
             Enemies.Add(enemy);
             enemy.Dead += OnEnemyDead;
-            _enemyCount++;
-            UpdateEnemyCounterUI();
+
+            EnemyCounterView?.RegisterEnemy();
         }
 
         private void OnPlayerDead(BaseCharacterView sender)
@@ -81,8 +70,8 @@ namespace SampleArcade.GameManagers
 
             Enemies.Remove(enemy);
             enemy.Dead -= OnEnemyDead;
-            _enemyCount--;
-            UpdateEnemyCounterUI();
+
+            EnemyCounterView?.EnemyKilled();
 
             if (Enemies.Count == 0)
             {
@@ -93,20 +82,9 @@ namespace SampleArcade.GameManagers
 
         private void PlayerLose()
         {
-            if (Timer != null)
-            {
-                Timer.TimeEnd -= PlayerLose;
-            }
+            TimerView.TimeEnd -= PlayerLose;
             Loss?.Invoke();
             Time.timeScale = 0f;
-        }
-
-        private void UpdateEnemyCounterUI()
-        {
-            if (EnemyCounterUI != null)
-            {
-                EnemyCounterUI.UpdateEnemyCounter(_enemyCount);
-            }
         }
     }
 }

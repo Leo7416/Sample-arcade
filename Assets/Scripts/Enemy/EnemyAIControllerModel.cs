@@ -8,8 +8,7 @@ namespace SampleArcade.Enemy
         private EnemyTarget _target;
 
         public EnemyAIControllerModel(EnemyCharacterView enemy, EnemyDirectionController directionController,
-                            EnemySprintingController sprintingController, NavMesher navMesher,
-                            float viewRadius)
+                            EnemySprintingController sprintingController, NavMesher navMesher, float viewRadius)
         {
             _target = new EnemyTarget(enemy, null, viewRadius);
             _stateMachine = new EnemyStateMachine(enemy, directionController, sprintingController, navMesher, _target);

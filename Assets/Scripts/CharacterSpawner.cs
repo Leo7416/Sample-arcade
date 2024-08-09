@@ -80,7 +80,8 @@ namespace SampleArcade
                 }
                 else if (_currentEnemyCount < _maxEnemyCount)
                 {
-                    SpawnCharacter(_enemyCharacterCompositionRoot, ref _currentEnemyCount);
+                    var enemy = SpawnCharacter(_enemyCharacterCompositionRoot, ref _currentEnemyCount) as EnemyCharacterView;
+                    _gameManager.RegisterEnemy(enemy);
                 }
 
                 _nextSpawnIntervalSeconds = Random.Range(_minSpawnIntervalSeconds, _maxSpawnIntervalSeconds);
@@ -96,11 +97,6 @@ namespace SampleArcade
             var composedCharacter = compositionRootInstance.Compose(_timer);
 
             currentCount++;
-
-            if (composedCharacter is EnemyCharacterView enemy)
-            {
-                _gameManager.RegisterEnemy(enemy);
-            }
 
             return composedCharacter;
         }
