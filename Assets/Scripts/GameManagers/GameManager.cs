@@ -22,6 +22,20 @@ namespace SampleArcade.GameManagers
 
         private bool _playerRegistered = false;
 
+        public static GameManager Instance;
+
+        protected void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
+
         protected void Start()
         {
             TimerView.TimeEnd += PlayerLose;

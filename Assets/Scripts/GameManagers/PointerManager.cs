@@ -9,14 +9,16 @@ namespace SampleArcade.GameManagers
         [SerializeField]
         PointerIcon _pointerPrefab;
         [SerializeField]
-        Transform _playerTransform;
-        [SerializeField]
         UnityEngine.Camera _camera;
-    
+
+        private Transform _playerTransform;
+        private PlayerCharacterView _player;
+
         private Dictionary<EnemyPointer, PointerIcon> _dictionary = new Dictionary<EnemyPointer, PointerIcon>();
 
         public static PointerManager Instance;
-        private void Awake()
+
+        protected void Awake()
         {
             if (Instance == null)
             {
@@ -30,24 +32,41 @@ namespace SampleArcade.GameManagers
 
         public void AddToList(EnemyPointer enemyPointer)
         {
-            PointerIcon newPointer = Instantiate(_pointerPrefab, transform);
-            _dictionary.Add(enemyPointer, newPointer);
+            if (!_dictionary.ContainsKey(enemyPointer))
+            {
+                PointerIcon newPointer = Instantiate(_pointerPrefab, transform);
+                _dictionary.Add(enemyPointer, newPointer);
+            }
         }
 
         public void RemoveFromList(EnemyPointer enemyPointer)
         {
-            Destroy(_dictionary[enemyPointer].gameObject);
-            _dictionary.Remove(enemyPointer);
+            if (_dictionary.TryGetValue(enemyPointer, out PointerIcon pointerIcon))
+            {
+                Destroy(pointerIcon.gameObject);
+                _dictionary.Remove(enemyPointer);
+            }
         }
 
-        void LateUpdate()
+        protected void LateUpdate()
         {
+            if (GameManager.Instance.Player == null) return;
+            _playerTransform = GameManager.Instance.Player.transform;
+            
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(_camera);
+
+            List<EnemyPointer> keysToRemove = new List<EnemyPointer>();
 
             foreach (var kvp in _dictionary)
             {
                 EnemyPointer enemyPointer = kvp.Key;
                 PointerIcon pointerIcon = kvp.Value;
+
+                if (enemyPointer == null)
+                {
+                    keysToRemove.Add(kvp.Key);
+                    continue;
+                }
 
                 Vector3 toEnemy = enemyPointer.transform.position - _playerTransform.position;
                 Ray ray = new Ray(_playerTransform.position, toEnemy);
@@ -84,27 +103,23 @@ namespace SampleArcade.GameManagers
 
                 pointerIcon.SetIconPosition(position, rotation);
             }
+
+            foreach (var key in keysToRemove)
+            {
+                RemoveFromList(key);
+            }
         }
 
-        Quaternion GetIconRotation(int planeIndex)
+        private Quaternion GetIconRotation(int planeIndex)
         {
-            if (planeIndex == 0)
+            switch (planeIndex)
             {
-                return Quaternion.Euler(0f, 0f, 90f);
+                case 0: return Quaternion.Euler(0f, 0f, 90f);
+                case 1: return Quaternion.Euler(0f, 0f, -90f);
+                case 2: return Quaternion.Euler(0f, 0f, 180f);
+                case 3: return Quaternion.Euler(0f, 0f, 0f);
+                default: return Quaternion.identity;
             }
-            else if (planeIndex == 1)
-            {
-                return Quaternion.Euler(0f, 0f, -90f);
-            }
-            else if (planeIndex == 2)
-            {
-                return Quaternion.Euler(0f, 0f, 180);
-            }
-            else if (planeIndex == 3)
-            {
-                return Quaternion.Euler(0f, 0f, 0f);
-            }
-            return Quaternion.identity;
         }
     }
 }

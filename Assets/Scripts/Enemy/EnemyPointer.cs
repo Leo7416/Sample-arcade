@@ -1,20 +1,21 @@
 ﻿using SampleArcade.GameManagers;
 using System;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace SampleArcade.Enemy
 {
     public class EnemyPointer : MonoBehaviour
     {
-        private BaseCharacterView _сharacter;
+        private BaseCharacterView _character;
 
         private void Start()
         {
-            _сharacter = GetComponent<BaseCharacterView>();
+            _character = GetComponent<BaseCharacterView>();
 
-            if (_сharacter != null)
+            if (_character != null)
             {
-                _сharacter.Dead += OnEnemyDead;
+                _character.Dead += OnEnemyDead;
             }
 
             PointerManager.Instance.AddToList(this);
@@ -22,15 +23,16 @@ namespace SampleArcade.Enemy
 
         private void OnEnemyDead(BaseCharacterView character)
         {
-            if (_сharacter != null)
-            {
-                _сharacter.Dead -= OnEnemyDead;
-            }
+            PointerManager.Instance.RemoveFromList(this);
         }
 
-        private void Destroy()
+        private void OnDestroy()
         {
-            PointerManager.Instance.RemoveFromList(this);
+            
+            if (_character != null)
+            {
+                _character.Dead -= OnEnemyDead;
+            }
         }
     }
 }
