@@ -1,4 +1,5 @@
 ﻿using SampleArcade.Enemy;
+using SampleArcade.Player;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -1,7 +1,6 @@
-using SampleArcade.Movement;
 using UnityEngine;
 
-namespace SampleArcade
+namespace SampleArcade.Player
 {
     [RequireComponent(typeof(PlayerMovementDirectionController), typeof(PlayerSprintingController))]
 

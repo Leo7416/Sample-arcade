@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SampleArcade.Player;
+using UnityEngine;
 
 namespace SampleArcade.Enemy
 {

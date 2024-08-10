@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2976225034438070274}
-  - component: {fileID: 310114487517975049}
+  - component: {fileID: 8948577046634750877}
   m_Layer: 0
   m_Name: CharacterSpawner
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &310114487517975049
+--- !u!114 &8948577046634750877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b88907cfb14a3438bc168d0e01d24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerCharacterPrefab: {fileID: 8673278978711859641, guid: a4f5e08281a24e44caa0ab48b0eddd19, type: 3}
-  _enemyCharacterPrefab: {fileID: 976981577661569047, guid: b98b6293eec3e4b498169e1a441e5417, type: 3}
+  _playerCharacterCompositionRoot: {fileID: 4986910992426734277, guid: 0517a0f5e675f5a45a984ea89da788d5, type: 3}
+  _enemyCharacterCompositionRoot: {fileID: 6795105314093779027, guid: b98b6293eec3e4b498169e1a441e5417, type: 3}
   _range: 10
   _maxPlayerCount: 1
   _maxEnemyCount: 5
-  _minSpawnIntervalSeconds: 1
-  _maxSpawnIntervalSeconds: 2
+  _minSpawnIntervalSeconds: 5
+  _maxSpawnIntervalSeconds: 15
+  _gameManager: {fileID: 0}
+  _cameraController: {fileID: 2577952575751178078, guid: 6e51a57c4837fb84fa1eaa993c73c4f8, type: 3}

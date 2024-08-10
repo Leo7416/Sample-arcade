@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using SampleArcade.Movement;
+using UnityEngine;
 
-namespace SampleArcade.Movement
+namespace SampleArcade.Player
 {
     public class PlayerMovementDirectionController : MonoBehaviour, IMovementDirectionSource
     {

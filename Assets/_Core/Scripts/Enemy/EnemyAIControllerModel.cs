@@ -1,4 +1,5 @@
 ﻿using SampleArcade.Enemy.States;
+using SampleArcade.Player;
 
 namespace SampleArcade.Enemy
 {

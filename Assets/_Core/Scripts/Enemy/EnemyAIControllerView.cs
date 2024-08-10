@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using SampleArcade.GameManagers;
+using SampleArcade.Player;
+using UnityEngine;
 namespace SampleArcade.Enemy
 {
     public class EnemyAIControllerView : MonoBehaviour
@@ -21,7 +23,7 @@ namespace SampleArcade.Enemy
 
         protected void Update()
         {
-            var player = FindObjectOfType<PlayerCharacterView>();
+            var player = GameManager.Instance.Player;
             _Model.UpdateAI(player);
         }
     }

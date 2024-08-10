@@ -47,5 +47,5 @@ MonoBehaviour:
   _pickUpPrefab: {fileID: 858069652947451764, guid: 8b14fe2afab830343b59bc4f2ec44741, type: 3}
   _range: 2
   _maxCount: 2
-  _minSpawnIntervalSeconds: 1
+  _minSpawnIntervalSeconds: 8
   _maxSpawnIntervalSeconds: 10

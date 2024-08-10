@@ -40,7 +40,7 @@ namespace SampleArcade
         private IMovementDirectionSource _movementDirectionSource;
         private ISprintingSource _sprintingSource;
         private CharacterController _characterController;
-        private HeathBarUI _heathBarUI;
+        private HealthBarUIView _healthBarUI;
         private WeaponView _weapon;
         private WeaponFactory _currentWeapon;
 
@@ -56,7 +56,7 @@ namespace SampleArcade
             _movementDirectionSource = GetComponent<IMovementDirectionSource>();
             _sprintingSource = GetComponent<ISprintingSource>();
             _characterController = GetComponent<CharacterController>();
-            _heathBarUI = GetComponentInChildren<HeathBarUI>();
+            _healthBarUI = GetComponentInChildren<HealthBarUIView>();
         }
 
         protected void Start()
@@ -71,6 +71,7 @@ namespace SampleArcade
             Model.Dead += OnDeath;
 
             _currentWeapon = _baseWeapon;
+            _healthBarUI.UpdateHealth(Model.CurrentHealth);
         }
 
         protected void Update()
@@ -118,7 +119,7 @@ namespace SampleArcade
                 var bullet = other.gameObject.GetComponent<BulletView>();
 
                 Model.Damage(bullet.Damage);
-                _heathBarUI.SetHealth(Model.CurrentHealth);
+                _healthBarUI.UpdateHealth(Model.CurrentHealth);
 
                 _hitParticle.Play();
                 _hitSound.Play();
