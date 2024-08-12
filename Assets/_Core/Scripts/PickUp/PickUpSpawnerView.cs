@@ -1,5 +1,7 @@
 ﻿using SampleArcade.Timer;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace SampleArcade.PickUp
@@ -61,6 +63,7 @@ namespace SampleArcade.PickUp
             pickedUpItem.OnPickedUp -= OnItemPickedUp;
         }
 
+#if UNITY_EDITOR
         protected void OnDrawGizmos()
         {
             var cashedColor = Handles.color;
@@ -68,5 +71,6 @@ namespace SampleArcade.PickUp
             Handles.DrawWireDisc(transform.position, Vector3.up, Model?.Range ?? _range);
             Handles.color = cashedColor;
         }
+#endif
     }
 }

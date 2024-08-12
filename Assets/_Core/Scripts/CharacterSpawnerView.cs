@@ -4,7 +4,9 @@ using SampleArcade.Enemy;
 using SampleArcade.GameManagers;
 using SampleArcade.Player;
 using SampleArcade.Timer;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -82,6 +84,7 @@ namespace SampleArcade
             }
         }
 
+#if UNITY_EDITOR
         protected void OnDrawGizmos()
         {
             var cachedColor = Handles.color;
@@ -89,5 +92,6 @@ namespace SampleArcade
             Handles.DrawWireDisc(transform.position, Vector3.up, Model?.Range ?? _range);
             Handles.color = cachedColor;
         }
+#endif
     }
 }
