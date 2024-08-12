@@ -71,5 +71,10 @@ namespace SampleArcade
         {
             _characterMovementController.MultiplySpeedBoost(boostSpeed);
         }
+
+        public void MultiplyDamageBoost(float boostDamage)
+        {
+            _shootingController.Weapon.SetDamageMultiplier(boostDamage);
+        }
     }
 }

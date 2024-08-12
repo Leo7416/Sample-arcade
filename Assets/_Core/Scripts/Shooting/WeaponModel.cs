@@ -9,6 +9,8 @@ namespace SampleArcade.Shooting
 
         public WeaponDescription Description {  get; }
 
+        public float DamageMultiplier { get; private set; } = 1f;
+
         public WeaponModel(WeaponDescription description)
         {
             Description = description;
@@ -21,6 +23,11 @@ namespace SampleArcade.Shooting
             target.Normalize();
 
             Shot?.Invoke(target, Description);
+        }
+
+         public void SetDamageMultiplier(float multiplier)
+        {
+            DamageMultiplier = multiplier;
         }
     }
 }

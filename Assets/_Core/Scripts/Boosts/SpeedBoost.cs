@@ -20,6 +20,7 @@ namespace SampleArcade.Boosts
             if (_characterView != null)
             {
                 _characterView.DeactivateSpeedBoostEffect();
+                _characterView = null;
             }
         }
     }

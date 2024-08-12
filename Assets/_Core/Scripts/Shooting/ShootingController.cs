@@ -7,6 +7,7 @@ namespace SampleArcade.Shooting
     {
         public bool HasTarget => _target != null;
         public Vector3 TargetPosition => _target.Transform.Position;
+        public WeaponModel Weapon => _weapon;
 
         private readonly IShootingTarget _shootingTarget;
         private readonly ITimer _timer;

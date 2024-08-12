@@ -46,7 +46,7 @@ namespace SampleArcade.UI
         {
             if (_enemyCounterText != null && Model != null)
             {
-                _enemyCounterText.text = $"Врагов осталось: {Model.EnemyCount}";
+                _enemyCounterText.text = $": {Model.EnemyCount}";
             }
         }
     }

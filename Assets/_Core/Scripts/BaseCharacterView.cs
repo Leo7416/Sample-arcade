@@ -37,6 +37,9 @@ namespace SampleArcade
         [SerializeField]
         private ParticleSystem _speedBoostParticle;
 
+        [SerializeField]
+        private ParticleSystem _damageBoostParticle;
+
         private IMovementDirectionSource _movementDirectionSource;
         private ISprintingSource _sprintingSource;
         private CharacterController _characterController;
@@ -45,7 +48,8 @@ namespace SampleArcade
         private WeaponFactory _currentWeapon;
 
         public BaseCharacterModel Model { get; private set; }
-        public bool IsBoostActivate { get; set; }
+        public bool IsSpeedBoostActivate { get; private set; }
+        public bool IsDamageBoostActivate { get; private set; }
 
         private float _deadAnimationTimeSeconds = 4.5f;
         private float _speedBoostMultiplier = 1f;
@@ -82,7 +86,7 @@ namespace SampleArcade
                 _sprintingSource.IsSprinting);
             Model.TryShoot(_weapon.BulletSpawnPosition.position);
 
-            if (IsBoostActivate)
+            if (IsSpeedBoostActivate)
             {
                 Model.MultiplySpeedBoost(_speedBoostMultiplier);
             }
@@ -102,7 +106,7 @@ namespace SampleArcade
 
             _animator.SetBool("IsWalking", moveDelta != Vector3.zero);
             _animator.SetBool("IsShooting", Model.IsShooting);
-            _animator.SetBool("IsRunning", _sprintingSource.IsSprinting || IsBoostActivate);
+            _animator.SetBool("IsRunning", _sprintingSource.IsSprinting || IsSpeedBoostActivate);
             _animator.SetBool("IsBackwards", isBackwards);
         }
 
@@ -114,27 +118,12 @@ namespace SampleArcade
 
         protected void OnTriggerEnter(Collider other)
         {
-            if (LayerUtils.IsBullet(other.gameObject))
+            var pickUpItem = other.gameObject.GetComponent<PickUpItem>();
+            if (pickUpItem != null)
             {
-                var bullet = other.gameObject.GetComponent<BulletView>();
-
-                Model.Damage(bullet.Damage);
-                _healthBarUI.UpdateHealth(Model.CurrentHealth);
-
-                _hitParticle.Play();
-                _hitSound.Play();
-
+                pickUpItem.PickUp(this);
                 Destroy(other.gameObject);
             }
-            else 
-            {
-                var pickUpItem = other.gameObject.GetComponent<PickUpItem>();
-                if (pickUpItem != null)
-                {
-                    pickUpItem.PickUp(this);
-                    Destroy(other.gameObject);
-                }
-            }      
         }
 
         private void OnDeath()
@@ -148,6 +137,15 @@ namespace SampleArcade
             Dead?.Invoke(this);
 
             Destroy(gameObject, _deadAnimationTimeSeconds);
+        }
+
+        public void OnBulletHit(BulletView bullet)
+        {
+            Model.Damage(bullet.Damage);
+            _healthBarUI.UpdateHealth(Model.CurrentHealth);
+
+            _hitParticle.Play();
+            _hitSound.Play();
         }
 
         public void SetWeapon(WeaponFactory weaponFactory)
@@ -179,7 +177,7 @@ namespace SampleArcade
         public void ActivateSpeedBoostEffect(float multiplier, float duration)
         {
             _speedBoostMultiplier = multiplier;
-            IsBoostActivate = true;
+            IsSpeedBoostActivate = true;
 
             _speedBoostParticle.Play();
             Invoke(nameof(DeactivateSpeedBoostEffect), duration);
@@ -187,8 +185,25 @@ namespace SampleArcade
 
         public void DeactivateSpeedBoostEffect()
         {
-             IsBoostActivate = false;
+             IsSpeedBoostActivate = false;
             _speedBoostParticle.Stop();
+        }
+
+        public void ActivateDamageBoostEffect(float multiplier, float duration)
+        {
+            Model.MultiplyDamageBoost(multiplier);
+            IsDamageBoostActivate = true;
+
+            _damageBoostParticle.Play();
+            Invoke(nameof(DeactivateDamageBoostEffect), duration);
+        }
+
+        public void DeactivateDamageBoostEffect()
+        {
+            Model.MultiplyDamageBoost(1f);
+            IsDamageBoostActivate = false;
+
+            _damageBoostParticle.Stop();
         }
     }
 }

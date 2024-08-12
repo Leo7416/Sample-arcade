@@ -42,7 +42,7 @@ namespace SampleArcade.Shooting
         public void Shoot(Vector3 targetDirection, WeaponDescription description)
         {
             var bullet = Instantiate(_bulletPrefab, BulletSpawnPosition.position, Quaternion.identity);
-            bullet.Initialize(description.Damage, targetDirection, 
+            bullet.Initialize(description.Damage * Model.DamageMultiplier, targetDirection, 
                 description.BulletMaxFlyDistance, description.BulletFlySpeed);
 
             _shootParticle.Play();

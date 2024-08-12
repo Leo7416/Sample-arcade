@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994778d54fb826a4faa3725e595c82c3, type: 3}
+  m_Name: Whithout
+  m_EditorClassIdentifier: 
+  _weaponPrefab: {fileID: 4836602494482196731, guid: 57e1c97f83ebaa346bf7ad52ac3a63c1, type: 3}
+  _weaponDescription:
+    <ShootRadius>k__BackingField: 0
+    <ShootFrequencySec>k__BackingField: 0
+    <Damage>k__BackingField: 0
+    <BulletMaxFlyDistance>k__BackingField: 0
+    <BulletFlySpeed>k__BackingField: 0
