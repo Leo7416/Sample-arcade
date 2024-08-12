@@ -4,7 +4,6 @@ using SampleArcade.Enemy;
 using SampleArcade.GameManagers;
 using SampleArcade.Player;
 using SampleArcade.Timer;
-using TMPro.Examples;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,8 +40,6 @@ namespace SampleArcade
 
         protected void Awake()
         {
-            _cameraController = FindObjectOfType<CameraControllerView>();
-
             _timer = new UnityTimer();
             Model = new CharacterSpawnerModel(
                 _playerCharacterCompositionRoot,
@@ -60,6 +57,11 @@ namespace SampleArcade
             {
                 Model.ResetPlayerSpawnFlag();
             }
+        }
+
+        protected void Start()
+        {
+            _cameraController = UnityEngine.Camera.main.GetComponent<CameraControllerView>();
         }
 
         protected void Update()

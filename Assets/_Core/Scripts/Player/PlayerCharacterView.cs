@@ -9,4 +9,3 @@ namespace SampleArcade.Player
 
     }
 }
-

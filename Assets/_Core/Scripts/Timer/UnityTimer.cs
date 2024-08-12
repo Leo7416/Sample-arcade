@@ -6,5 +6,4 @@ namespace SampleArcade.Timer
     {
         public float DeltaTime => Time.deltaTime;
     }
-
 }

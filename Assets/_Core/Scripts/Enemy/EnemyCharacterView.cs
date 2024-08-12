@@ -16,4 +16,3 @@ namespace SampleArcade.Enemy
         public bool DecidesToRun() => UnityEngine.Random.Range(0, 100) <= EscapePercent;
     }
 }
-

@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Изменяет размер RectTransform, чтобы он соответствовал Screen.safeArea
-/// </summary>
 [ExecuteInEditMode]
 public class SafeAreaFitter : MonoBehaviour
 {
@@ -45,4 +42,3 @@ public class SafeAreaFitter : MonoBehaviour
         return Screen.safeArea;
     }
 }
-
