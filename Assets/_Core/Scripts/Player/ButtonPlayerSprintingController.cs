@@ -1,4 +1,5 @@
-﻿using SampleArcade.GameManagers;
+﻿#if UNITY_ANDROID
+using SampleArcade.GameManagers;
 using SampleArcade.Movement;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,3 +36,4 @@ namespace SampleArcade.Player
         }
     }
 }
+#endif
