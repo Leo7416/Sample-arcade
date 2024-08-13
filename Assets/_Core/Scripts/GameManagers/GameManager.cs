@@ -4,6 +4,7 @@ using SampleArcade.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SampleArcade.GameManagers
 {
@@ -11,7 +12,13 @@ namespace SampleArcade.GameManagers
     {
         public event Action Win;
         public event Action Loss;
+#if UNITY_ANDROID
+        [field: SerializeField]
+        public Joystick Joystick { get; private set; }
 
+        [field: SerializeField]
+        public Button SprintButton { get; private set; }
+#endif
         [field: SerializeField]
         public TimerUIView TimerView { get; private set; }
 
